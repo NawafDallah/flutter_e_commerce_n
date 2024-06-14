@@ -1,0 +1,96 @@
+name: flutter_e_commerce_n_1
+description: "A new Flutter project."
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+#--------------- PACKAGES ------------------#
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+
+
+  # Utility Packages
+  dartz: ^0.10.1
+  connectivity_plus: ^6.0.3
+  flutter_screenutil: ^5.9.3
+  device_preview: ^1.2.0
+  flutter_otp_text_field: ^1.1.3+2
+  smooth_page_indicator: ^1.1.0
+  intl: ^0.19.0
+  
+  # State Management
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.6
+
+  # Icons
+  iconsax: ^0.0.8
+  cupertino_icons: ^1.0.6
+
+  # Product Specific
+  equatable: ^2.0.5
+  get_it: ^7.7.0
+  dio: ^5.4.3+1
+  shared_preferences: ^2.2.3
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.3
+
+#--------------- ./ PACKAGES END ------------------#
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+
+flutter:
+
+  uses-material-design: true
+
+  #--------------- LOCAL ASSETS ------------------#
+  assets:
+    - assets/logos/
+    - assets/langs/ar.json
+    - assets/langs/en.json
+    - assets/icons/brands/
+    - assets/images/content/
+    - assets/images/banners/
+    - assets/images/reviews/
+    - assets/images/products/
+    - assets/icons/categories/
+    - assets/images/animations/
+    - assets/icons/payment_methods/
+    - assets/images/on_boarding_images/
+
+  #------------- END LOCAL ASSETS ----------------#
+
+  
+  #--------------- LOCAL FONTS ------------------#
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 800
+#------------- END LOCAL FONTS ----------------#
