@@ -1,4 +1,4 @@
-# flutter_e_commerce_n_1
+# flutter_e_commerce_n
 
 A new Flutter project.
 
