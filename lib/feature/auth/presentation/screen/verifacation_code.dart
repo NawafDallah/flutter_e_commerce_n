@@ -32,10 +32,10 @@ class VerificationCode extends StatelessWidget {
     if (previousPage == Routes.forgetPassword) {
       Navigator.of(context).pushNamed(Routes.resetPassword, arguments: email);
     } else if (previousPage == Routes.login) {
-      context.read<MiddlewareCubit>().changeMiddleWarePage(Routes.home);
+      context.read<MiddlewareCubit>().changeMiddleWarePage(Routes.navigationBar);
       sl<Box>().put("currentUser", userData);
       Navigator.of(context).pushNamedAndRemoveUntil(
-        Routes.home,
+        Routes.navigationBar,
         (route) => false,
       );
     } else {

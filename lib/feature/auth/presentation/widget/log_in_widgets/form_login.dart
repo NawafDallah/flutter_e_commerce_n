@@ -59,10 +59,10 @@ class _FormLoginState extends State<FormLogin> {
         },
       );
     } else {
-      context.read<MiddlewareCubit>().changeMiddleWarePage(Routes.home);
+      context.read<MiddlewareCubit>().changeMiddleWarePage(Routes.navigationBar);
       sl<Box>().put("currentUser", userData);
       Navigator.of(context).pushNamedAndRemoveUntil(
-        Routes.home,
+        Routes.navigationBar,
         (route) => false,
       );
     }

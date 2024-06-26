@@ -12,9 +12,6 @@ class Home extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: AppBar( 
-          title: const Text("home"),
-        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

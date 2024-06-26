@@ -10,5 +10,6 @@ class Routes {
   static const String verifyCode = '/verify_code'; 
   static const String resetPassword = '/reset_password'; 
   // home
+  static const String navigationBar = '/navigation_bar';
   static const String home = '/home';
 }
