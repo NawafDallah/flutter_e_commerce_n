@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../../../common/utils/constants/sizes.dart';
+import 'home.dart';
 
+import '../../../../common/widgets/responsive.dart';
 import '../../../../common/utils/constants/colors.dart';
 import '../../../../common/utils/functions/functions.dart';
 import '../bloc/nav_bar_index/nav_bar_index_cubit.dart';
-import 'home.dart';
 
 class CustomNavigationBar extends StatelessWidget {
   const CustomNavigationBar({super.key});
@@ -13,6 +15,7 @@ class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = NFunctions.isDarkMode(context);
+    final isTablet = Responsive.isTablet(context);
     List pages = [
       const Home(),
       Container(color: Colors.amber),
@@ -43,11 +46,12 @@ class CustomNavigationBar extends StatelessWidget {
               bottomNavigationBar: Container(
                 clipBehavior: Clip.antiAlias,
                 padding: const EdgeInsets.only(
-                    left: 32.0, right: 32.0, bottom: 24.0),
+                  left: NSizes.xl,
+                  right: NSizes.xl,
+                  bottom: NSizes.lg,
+                ),
                 decoration: BoxDecoration(
-                    color: isDark
-                        ? NColors.black.withOpacity(0.80)
-                        : NColors.white.withOpacity(0.8),
+                    color: isDark ? NColors.black : NColors.white,
                     borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(20.0))),
                 child: Row(
@@ -68,15 +72,19 @@ class CustomNavigationBar extends StatelessWidget {
                               AnimatedContainer(
                                 duration: const Duration(milliseconds: 100),
                                 height: 6.0,
-                                width: state.index == index ? 25.0 : 0.0,
+                                width: state.index == index
+                                    ? isTablet
+                                        ? 35.0
+                                        : 25.0
+                                    : 0.0,
                                 margin: const EdgeInsets.only(bottom: 8.0),
                                 decoration: BoxDecoration(
                                     color: navBarColors[index],
                                     borderRadius: BorderRadius.circular(12.0),
                                     boxShadow: [
                                       BoxShadow(
-                                        blurRadius: 25,
-                                        spreadRadius: 15,
+                                        blurRadius: 50,
+                                        spreadRadius: 25,
                                         offset: const Offset(0.0, 30.0),
                                         color: state.index == index
                                             ? navBarColors[index]
@@ -87,7 +95,7 @@ class CustomNavigationBar extends StatelessWidget {
                               Icon(
                                 bottomNavBarIcons[index],
                                 applyTextScaling: true,
-                                size: 25,
+                                size: isTablet ? 35 : 25,
                                 color: state.index == index
                                     ? navBarColors[index]
                                     : NColors.darkGrey,

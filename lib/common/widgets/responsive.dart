@@ -38,7 +38,7 @@ class Responsive extends StatelessWidget {
           return desktop!;
         } else if (constraints.maxWidth >= 650) {
           return tablet;
-        } else if (constraints.minHeight < 690) {
+        } else if (constraints.maxHeight < 690 && constraints.maxWidth < 650) {
           return smallMobile;
         } else {
           return mobile;

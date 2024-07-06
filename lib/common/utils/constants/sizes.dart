@@ -46,6 +46,10 @@ class NSizes {
   static const double productImageRadius = 16.0;
   static const double productItemHeight = 160.0;
 
+  // Product horizontal card
+  static const double cradHorzontalHeight = 100;
+  static const double cradHorizontalWidth = 280;
+
   // Input field
   static const double inputFieldRadius = 12.0;
   static const double spaceBtwInputFields = 16.0;
