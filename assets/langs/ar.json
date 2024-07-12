@@ -66,5 +66,9 @@
   "homeAppbarTitle": "أهلا، يوم جميل للتسوق",
   "homeAppbarSubTitle": "نواف حبيبي",
   "deleverTo": "التوصيل لـ",
-  "welcome": "وش ودك تطلب اليوم"
+  "welcome": "وش ودك تطلب اليوم؟",
+  "store": "المتجر",
+  "featured": "مختارات",
+  "populerProduct": "المنتجات الشائعة",
+  "favorite": "المفضلة"
 }

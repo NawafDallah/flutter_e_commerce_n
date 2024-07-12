@@ -21,25 +21,29 @@ class ProductBrandAndRating extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Text(
-                brand,
-                style: Theme.of(context).textTheme.bodySmall,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              const SizedBox(width: NSizes.xs),
-              const Icon(
-                Iconsax.verify5,
-                color: NColors.buttonPrimary,
-              ),
-            ],
+          Flexible(
+            child: Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    brand,
+                    style: Theme.of(context).textTheme.bodySmall,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+                const SizedBox(width: NSizes.xs),
+                const Icon(
+                  Iconsax.verify5,
+                  color: NColors.buttonPrimary,
+                ),
+              ],
+            ),
           ),
           Row(
             children: [
               Text(
-                rating.toString(),
+                rating.toStringAsFixed(2),
                 style: Theme.of(context).textTheme.bodyLarge,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,

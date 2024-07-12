@@ -33,8 +33,6 @@ class SliderBanner extends StatelessWidget {
                     valueListenable: pageNotifire,
                     builder: (_, value, __) {
                       return Container(
-                        alignment:
-                            AlignmentDirectional((value - index).abs(), 0.0),
                         margin:
                             const EdgeInsets.symmetric(horizontal: NSizes.md),
                         decoration: BoxDecoration(
@@ -43,10 +41,9 @@ class SliderBanner extends StatelessWidget {
                           image: DecorationImage(
                             alignment: AlignmentDirectional(
                                 (value - index).abs(), (value - index).abs()),
-                            matchTextDirection: true,
                             fit: BoxFit.cover,
                             image: const AssetImage(
-                                "assets/images/banners/banner_7.jpg"),
+                                "assets/images/banners/banner_2.jpg"),
                           ),
                         ),
                       );

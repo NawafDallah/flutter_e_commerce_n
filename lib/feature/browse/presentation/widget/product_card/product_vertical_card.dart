@@ -34,7 +34,7 @@ class ProductVerticalCard extends StatelessWidget {
           Column(
             children: [
               Image.asset(
-                "assets/images/products/iphone_12_red.png",
+                "assets/images/products/iphone_12_green.png",
                 height: 160,
               ),
               const Column(
@@ -45,16 +45,13 @@ class ProductVerticalCard extends StatelessWidget {
                   // PRODUCT BRAND AND RATING STAR
                   ProductBrandAndRating(
                     brand: "brand",
-                    rating: 4.35,
+                    rating: 4.3554,
                   ),
                   SizedBox(height: NSizes.xs),
                   // PRODUCT PRICE AND DISCOUNT PRICE
-                  ProductPrice(
-                    price: 5680,
-                    discount: null,
-                  ),
+                  ProductPrice(price: 5680),
                 ],
-              )
+              ),
             ],
           ),
           ...List.generate(
@@ -64,22 +61,16 @@ class ProductVerticalCard extends StatelessWidget {
               isVertical: true,
             ),
           ),
-          Positioned(
-            right: 0.0,
-            bottom: 0.0,
-            child: Container(
-              width: 30,
-              height: 30,
-              decoration: const BoxDecoration(
-                  color: NColors.primary,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(NSizes.borderRadiusLg),
-                    topLeft: Radius.circular(NSizes.borderRadiusLg),
-                  )),
-            ),
+          const Positioned(
+            right: 5.0,
+            top: 0.0,
+            child: FavoriteIcon(),
           ),
-          const FavoriteIcon(),
-          const ProductDicount(),
+          const Positioned(
+            left: 10.0,
+            top: 10.0,
+            child: ProductDicount(),
+          ),
         ],
       ),
     );
@@ -87,32 +78,26 @@ class ProductVerticalCard extends StatelessWidget {
 }
 
 class ProductDicount extends StatelessWidget {
-  const ProductDicount({
-    super.key,
-  });
+  const ProductDicount({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: 10.0,
-      top: 10.0,
-      child: Container(
-        width: 45,
-        height: 23,
-        decoration: BoxDecoration(
-          color: NColors.primary,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(
-            NSizes.borderRadiusSm,
-          ),
+    return Container(
+      width: 45,
+      height: 23,
+      decoration: BoxDecoration(
+        color: NColors.primary,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(
+          NSizes.borderRadiusSm,
         ),
-        child: Center(
-          child: Text(
-            "15%",
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
+      ),
+      child: Center(
+        child: Text(
+          "15%",
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
         ),
       ),
     );

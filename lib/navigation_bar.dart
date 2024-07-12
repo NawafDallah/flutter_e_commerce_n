@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../common/utils/constants/sizes.dart';
-import 'home.dart';
+import 'common/utils/constants/sizes.dart';
+import 'feature/favorite/presentation/screen/favorite.dart';
+import 'feature/browse/presentation/screen/home.dart';
 
-import '../../../../common/widgets/responsive.dart';
-import '../../../../common/utils/constants/colors.dart';
-import '../../../../common/utils/functions/functions.dart';
-import '../bloc/nav_bar_index/nav_bar_index_cubit.dart';
+import 'common/widgets/responsive.dart';
+import 'common/utils/constants/colors.dart';
+import 'common/utils/functions/functions.dart';
+import 'feature/browse/presentation/bloc/nav_bar_index/nav_bar_index_cubit.dart';
 
 class CustomNavigationBar extends StatelessWidget {
   const CustomNavigationBar({super.key});
@@ -18,8 +19,8 @@ class CustomNavigationBar extends StatelessWidget {
     final isTablet = Responsive.isTablet(context);
     List pages = [
       const Home(),
-      Container(color: Colors.amber),
-      Container(color: Colors.green),
+      Container(color: Colors.yellow),
+      const Favorite(),
       Container(color: Colors.red),
     ];
     List bottomNavBarIcons = [

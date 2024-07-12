@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_e_commerce_n_1/common/utils/extensions/translate_x_extension.dart';
 
 import '../../../../common/utils/constants/sizes.dart';
 import '../../../../common/widgets/responsive.dart';
 import '../widget/home/app_bar_capertino.dart';
 import '../widget/home/catigories.dart';
-import '../widget/home/featured_grid_product.dart';
+import '../widget/home/fade_logo.dart';
+import '../widget/home/pobuler_grid_product.dart';
 import '../widget/home/featured_list_product.dart';
 import '../widget/home/section_title.dart';
 import '../widget/home/slider_banner.dart';
@@ -22,6 +24,7 @@ class _HomeState extends State<Home> {
   late final ScrollController _scrollController;
   late final PageController _pageController;
   final _scrollNotifire = ValueNotifier<double>(0.0);
+  final _logoNotifire = ValueNotifier<double>(0.0);
   final _pageNotifire = ValueNotifier<double>(0.0);
   // late final Timer _timer;
 
@@ -30,6 +33,7 @@ class _HomeState extends State<Home> {
     _scrollController = ScrollController()..addListener(_scrollListener);
     _pageController = PageController(
       viewportFraction: 0.85,
+      keepPage: false,
     )..addListener(_pageListener);
     // sliderBannerTimer();
     super.initState();
@@ -49,6 +53,14 @@ class _HomeState extends State<Home> {
 
   _scrollListener() {
     _scrollNotifire.value = _scrollController.offset;
+    // Calculate the over-scroll amount
+    double overScroll =
+        _scrollController.offset - _scrollController.position.maxScrollExtent;
+    if (overScroll > 0) {
+      _logoNotifire.value = (overScroll / 200).clamp(0.0, 1.0);
+    } else {
+      _logoNotifire.value = 0.0;
+    }
   }
 
   _pageListener() {
@@ -81,76 +93,117 @@ class _HomeState extends State<Home> {
     final isTablet = Responsive.isTablet(context);
     final isSmallMobile = Responsive.isSmallMobile(context);
     return Scaffold(
-      body: CupertinoScrollbar(
-        controller: _scrollController,
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          controller: _scrollController,
-          slivers: [
-            // Cupertino App Bar IOS style
-            AppBarCupertino(scrollNotifire: _scrollNotifire),
-            // REFRESH INDICATOR TO FITCH DATA
-            const CupertinoSliverRefreshControl(),
-            // LIST OF HOME SECTIONS
-            SliverList(
-              delegate: SliverChildListDelegate([
+      body: Stack(
+        children: [
+          // BOTTOM FADE LOGO
+          FadeLogo(logoNotifire: _logoNotifire),
+          CupertinoScrollbar(
+            controller: _scrollController,
+            child: CustomScrollView(
+              physics: const BouncingScrollPhysics(),
+              controller: _scrollController,
+              slivers: [
+                // Cupertino App Bar IOS style
+                AppBarCupertino(scrollNotifire: _scrollNotifire),
+
+                // THE REFRESH INDICATOR IOS STYLE TO FITCH DATA
+                const CupertinoSliverRefreshControl(),
+
                 // THE WELCOME TEXT
-                const WelcomeTexts(),
+                const SliverToBoxAdapter(child: WelcomeTexts()),
 
                 // SPACE
-                SizedBox(
+                SliverToBoxAdapter(
+                  child: SizedBox(
                     height: isTablet
                         ? NSizes.spaceBtwSections
                         : isSmallMobile
                             ? null
-                            : NSizes.spaceBtwItems),
+                            : NSizes.spaceBtwItems,
+                  ),
+                ),
 
                 // CATIGORIES GRID VIEW
                 const Catigories(),
 
-                const Divider(thickness: 5.0),
+                // DIVIDER
+                const SliverToBoxAdapter(child: Divider(thickness: 3.0)),
 
                 // SPACE
-                SizedBox(
+                SliverToBoxAdapter(
+                  child: SizedBox(
                     height: isTablet
                         ? NSizes.spaceBtwSections
                         : isSmallMobile
                             ? null
-                            : NSizes.spaceBtwItems),
-
-                // HORIZONTAL BANNER
-                SliderBanner(
-                  pageController: _pageController,
-                  pageNotifire: _pageNotifire,
+                            : NSizes.spaceBtwItems,
+                  ),
                 ),
 
-                const Divider(thickness: 3.0),
+                // HORIZONTAL BANNER
+                SliverToBoxAdapter(
+                  child: SliderBanner(
+                    pageController: _pageController,
+                    pageNotifire: _pageNotifire,
+                  ),
+                ),
+
+                // DIVIDER
+                const SliverToBoxAdapter(child: Divider(thickness: 3.0)),
 
                 // TITLE OF THE SECTION
-                const SectionTitle(title: "Featured"),
-                // FEATURED PRODUCT LIST
-                const FeaturedListItems(),
+                SliverToBoxAdapter(
+                  child: SectionTitle(
+                    title: "featured".tr(context),
+                    padding: 16.0,
+                  ),
+                ),
+
+                // FEATURED PRODUCT LIST VIEW
+                const SliverToBoxAdapter(child: FeaturedListItems()),
 
                 // SPACE
-                SizedBox(
+                SliverToBoxAdapter(
+                  child: SizedBox(
                     height: isTablet
                         ? NSizes.spaceBtwSections
                         : isSmallMobile
                             ? null
-                            : NSizes.spaceBtwItems),
+                            : NSizes.spaceBtwItems,
+                  ),
+                ),
 
-                const Divider(thickness: 3.0),
+                // DIVIDER
+                const SliverToBoxAdapter(child: Divider(thickness: 3.0)),
 
                 // TITLE OF THE SECTION
-                const SectionTitle(title: "Populer product"),
+                SliverToBoxAdapter(
+                  child: SectionTitle(
+                    title: "populerProduct".tr(context),
+                    padding: 16.0,
+                  ),
+                ),
+
+                // SPACE
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: isTablet
+                        ? NSizes.spaceBtwSections
+                        : NSizes.spaceBtwItems,
+                  ),
+                ),
+
+                // POPULER PRODUCT GRID VIEW
                 const PopulerGridItems(),
 
                 // SPACE
-                const SizedBox(height: NSizes.spaceBtwSections),
-              ]),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: kBottomNavigationBarHeight * 1.5),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

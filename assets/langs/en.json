@@ -66,5 +66,9 @@
   "homeAppbarTitle": "Welcome, Good day for shopping",
   "homeAppbarSubTitle": "Nawaf Dallah",
   "deleverTo": "Delever to",
-  "welcome": "What would you like to order"
+  "welcome": "What would you like to order?",
+  "store": "Store",
+  "featured": "Featured",
+  "populerProduct": "Populer product",
+  "favorite": "Favorite"
 }

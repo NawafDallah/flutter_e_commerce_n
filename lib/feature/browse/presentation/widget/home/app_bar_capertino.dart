@@ -7,6 +7,7 @@ import '../../../../../common/utils/constants/colors.dart';
 import '../../../../../common/utils/constants/sizes.dart';
 import '../../../../../common/utils/functions/functions.dart';
 import '../../../../../common/widgets/responsive.dart';
+import 'search_capertino.dart';
 
 class AppBarCupertino extends StatelessWidget {
   const AppBarCupertino({
@@ -19,6 +20,7 @@ class AppBarCupertino extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = NFunctions.isDarkMode(context);
+    final isArabic = NFunctions.isArabic(context);
     return CupertinoSliverNavigationBar(
       automaticallyImplyLeading: false,
       automaticallyImplyTitle: false,
@@ -31,19 +33,16 @@ class AppBarCupertino extends StatelessWidget {
           builder: (_, value, __) {
             return FadeIcon(value: value);
           }),
-      largeTitle: const Padding(
-        padding: EdgeInsets.only(right: 16.0),
-        child: CupertinoSearchTextField(
-          decoration: BoxDecoration(
-              color: CupertinoColors.tertiarySystemFill,
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              border: Border(bottom: BorderSide(color: NColors.primary))),
+      largeTitle: Padding(
+        padding: EdgeInsets.only(
+          left: isArabic ? 16.0 : 0.0,
+          right: isArabic ? 0.0 : 16.0,
         ),
+        child: const SearchBarCupertino(),
       ),
     );
   }
 }
-
 
 class LeadingAppBar extends StatelessWidget {
   const LeadingAppBar({
@@ -103,10 +102,10 @@ class FadeIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedCrossFade(
-      excludeBottomFocus: true,
-      alignment: const AlignmentDirectional(1.0, -1.0),
-      firstChild: IconButton(
+    return AnimatedOpacity(
+      opacity: value >= kToolbarHeight? 1.0 : 0.0,
+      duration: const Duration(milliseconds: 200),
+      child: IconButton(
         padding: EdgeInsets.zero,
         onPressed: () {},
         icon: const Icon(
@@ -115,12 +114,6 @@ class FadeIcon extends StatelessWidget {
           color: NColors.primary,
         ),
       ),
-      secondChild: const SizedBox(),
-      crossFadeState: value >= kToolbarHeight
-          ? CrossFadeState.showFirst
-          : CrossFadeState.showSecond,
-      duration: const Duration(milliseconds: 100),
-      sizeCurve: Curves.ease,
     );
   }
 }

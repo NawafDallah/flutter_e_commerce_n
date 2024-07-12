@@ -41,11 +41,15 @@ class ProductHorizontalCard extends StatelessWidget {
                   children: [
                     Positioned.fill(
                       child: Image.asset(
-                        "assets/images/products/iphone_12_red.png",
+                        "assets/images/products/iphone_12_blue.png",
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const FavoriteIcon(),
+                    const Positioned(
+                      right: 0.0,
+                      top: 0.0,
+                      child: FavoriteIcon(),
+                    ),
                   ],
                 ),
               ),
@@ -80,20 +84,6 @@ class ProductHorizontalCard extends StatelessWidget {
               isVertical: false,
             ),
           ),
-          Positioned(
-            right: 0.0,
-            bottom: 0.0,
-            child: Container(
-              width: 30,
-              height: 30,
-              decoration: const BoxDecoration(
-                  color: NColors.primary,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(NSizes.borderRadiusLg),
-                    topLeft: Radius.circular(NSizes.borderRadiusLg),
-                  )),
-            ),
-          )
         ],
       ),
     );

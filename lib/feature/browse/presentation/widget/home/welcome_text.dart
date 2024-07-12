@@ -1,3 +1,4 @@
+import 'package:flutter_e_commerce_n_1/common/utils/constants/colors.dart';
 import 'package:flutter_e_commerce_n_1/common/utils/extensions/translate_x_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -31,12 +32,13 @@ class WelcomeTexts extends StatelessWidget {
                   ),
               children: [
                 TextSpan(
-                  text: ', ${user["userName"]}?',
+                  text: ' ${user["userName"]}',
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: NColors.primary,
                         fontSize: isTablet ? 24.0 : null,
                       ),
-                )
+                ),
               ],
             ),
           ),

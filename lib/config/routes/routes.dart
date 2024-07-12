@@ -12,4 +12,6 @@ class Routes {
   // home
   static const String navigationBar = '/navigation_bar';
   static const String home = '/home';
+  static const String catigory = '/catigory';
+  static const String favorite = '/favorite';
 }

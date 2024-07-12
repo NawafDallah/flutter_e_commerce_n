@@ -6,8 +6,8 @@ import '../../feature/auth/presentation/screen/login.dart';
 import '../../feature/auth/presentation/screen/reset_password.dart';
 import '../../feature/auth/presentation/screen/signup.dart';
 import '../../feature/auth/presentation/screen/verifacation_code.dart';
-import '../../feature/browse/presentation/screen/home.dart';
-import '../../feature/browse/presentation/screen/navigation_bar.dart';
+import '../../feature/browse/presentation/screen/catigories_page.dart';
+import '../../navigation_bar.dart';
 import '../../feature/on_boarding/presentation/bloc/on_boarding_providers.dart';
 import 'routes.dart';
 
@@ -22,35 +22,45 @@ class AppRouter {
 
       /// AUTH PAGES
       case Routes.login:
-        return CupertinoPageRoute(builder: (_) => const Login());
+        return CupertinoPageRoute(
+          builder: (_) => const Login(),
+        );
       case Routes.signup:
         return CupertinoPageRoute(
-            fullscreenDialog: true, builder: (context) => const Signup());
+          fullscreenDialog: true,
+          builder: (context) => const Signup(),
+        );
       case Routes.forgetPassword:
         return CupertinoPageRoute(
-            fullscreenDialog: true, builder: (_) => const ForgetPassword());
+          fullscreenDialog: true,
+          builder: (_) => const ForgetPassword(),
+        );
       case Routes.verifyCode:
         final args = routeSettings.arguments as Map<String, dynamic>;
         return CupertinoPageRoute(
-            builder: (_) => VerificationCode(
-                  email: args['email']!,
-                  previousPage: args['previousPage']!,
-                  userData: args["userData"],
-                ));
+          builder: (_) => VerificationCode(
+            email: args['email']!,
+            previousPage: args['previousPage']!,
+            userData: args["userData"],
+          ),
+        );
       case Routes.resetPassword:
         return CupertinoPageRoute(
-            builder: (_) => ResetPassword(
-                  email: routeSettings.arguments as String,
-                ));
+          builder: (_) => ResetPassword(
+            email: routeSettings.arguments as String,
+          ),
+        );
 
       /// HOME PAGES
-      case Routes.home:
-        return CupertinoPageRoute(
-          builder: (_) => const Home(),
-        );
-        case Routes.navigationBar:
+      case Routes.navigationBar:
         return CupertinoPageRoute(
           builder: (_) => const CustomNavigationBar(),
+        );
+      case Routes.catigory:
+        return CupertinoPageRoute(
+          builder: (_) => CatigoriesPage(
+            index: routeSettings.arguments as int,
+          ),
         );
       default:
         return null;

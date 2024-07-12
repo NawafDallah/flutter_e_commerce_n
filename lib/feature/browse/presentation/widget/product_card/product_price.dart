@@ -7,7 +7,7 @@ class ProductPrice extends StatelessWidget {
   const ProductPrice({
     super.key,
     required this.price,
-    required this.discount,
+    this.discount,
   });
 
   final double price;
@@ -20,9 +20,9 @@ class ProductPrice extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          FittedBox(
+          Flexible(
             child: Text(
-              '$price SR',
+              '${price.toStringAsFixed(1)} SR',
               style: Theme.of(context).textTheme.headlineSmall,
               overflow: TextOverflow.ellipsis,
               maxLines: 1,

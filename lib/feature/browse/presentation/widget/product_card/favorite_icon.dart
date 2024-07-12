@@ -10,20 +10,16 @@ class FavoriteIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = NFunctions.isDarkMode(context);
-    return Positioned(
-      top: 0.0,
-      right: 0.0,
-      child: Container(
-        width: 50,
-        height: 50,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: isDark
-              ? NColors.dark.withOpacity(0.5)
-              : NColors.white.withOpacity(0.5),
-        ),
-        child: const Icon(Iconsax.heart),
+    return Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isDark
+            ? NColors.dark.withOpacity(0.5)
+            : NColors.white.withOpacity(0.5),
       ),
+      child: const Icon(Iconsax.heart),
     );
   }
 }

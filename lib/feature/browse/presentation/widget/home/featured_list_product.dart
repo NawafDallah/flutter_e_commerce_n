@@ -16,13 +16,17 @@ class FeaturedListItems extends StatelessWidget {
       height: isSmallMobile
           ? NFunctions.screenHeight(context) * 0.25
           : NFunctions.screenHeight(context) * 0.20,
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
+      child: CustomScrollView(
         scrollDirection: Axis.horizontal,
-        itemCount: 8,
-        itemBuilder: (context, index) {
-          return const ProductHorizontalCard();
-        },
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverList.builder(
+            itemCount: 8,
+            itemBuilder: (context, index) {
+              return const ProductHorizontalCard();
+            },
+          )
+        ],
       ),
     );
   }
