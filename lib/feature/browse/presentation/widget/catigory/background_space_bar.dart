@@ -6,9 +6,7 @@ import '../home/section_title.dart';
 import 'brand_container.dart';
 
 class SpaceAppBarBackground extends StatelessWidget {
-  const SpaceAppBarBackground({
-    super.key,
-  });
+  const SpaceAppBarBackground({super.key});
 
   @override
   Widget build(BuildContext context) {

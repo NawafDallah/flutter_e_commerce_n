@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_e_commerce_n_1/common/utils/constants/sizes.dart';
 import 'package:flutter_e_commerce_n_1/common/utils/extensions/translate_x_extension.dart';
-import 'package:iconsax/iconsax.dart';
-
-import '../../../../common/utils/constants/colors.dart';
-import '../../../../common/utils/functions/functions.dart';
+import '../../../../common/utils/constants/image_strings.dart';
+import '../../../../common/utils/constants/sizes.dart';
+import '../../../../common/widgets/empty_page.dart';
 import '../../../../common/widgets/responsive.dart';
-import '../../../browse/presentation/bloc/is_clicked/is_clicked_cubit.dart';
+import '../../../../core/entities/products_entity.dart';
+import '../bloc/edit_btn_cubit/edit_btn_clicked_cubit.dart';
 import '../../../browse/presentation/widget/home/fade_logo.dart';
-import '../../../browse/presentation/widget/product_card/favorite_vertical_card.dart';
+import '../bloc/local_product_bloc/favorite_product_bloc.dart';
+import '../bloc/selected_favorite_product/selected_favorite_product_cubit.dart';
+import '../widget/favorite_app_bar.dart';
+import '../widget/favorite_vertical_card.dart';
 
 class Favorite extends StatefulWidget {
   const Favorite({super.key});
@@ -22,18 +24,16 @@ class Favorite extends StatefulWidget {
 class _FavoriteState extends State<Favorite> {
   late final ScrollController _scrollController;
   final _scrollNotifier = ValueNotifier<double>(0.0);
-  List<TestData> test = [
-    TestData(testFlag: false, name: "one"),
-    TestData(testFlag: true, name: "two"),
-    TestData(testFlag: true, name: "three"),
-    TestData(testFlag: true, name: "four"),
-    TestData(testFlag: true, name: "five"),
-    TestData(testFlag: true, name: "six"),
-  ];
+  final GlobalKey<SliverAnimatedGridState> _gridKey =
+      GlobalKey<SliverAnimatedGridState>();
+  List<ProductEntity> _products = [];
 
   @override
   void initState() {
     _scrollController = ScrollController()..addListener(_scrollListener);
+    context
+        .read<FavoriteProductBloc>()
+        .add(const GetSavedFavoriteProductEvent());
     super.initState();
   }
 
@@ -47,26 +47,48 @@ class _FavoriteState extends State<Favorite> {
 
   _scrollListener() {
     // Calculate the over-scroll amount
-    double overScroll =
-        _scrollController.offset - _scrollController.position.maxScrollExtent;
+    double overScroll = _scrollController.offset -
+        (_scrollController.position.maxScrollExtent + 50);
     if (overScroll > 0) {
-      _scrollNotifier.value = (overScroll / 200).clamp(0.0, 1.0);
+      _scrollNotifier.value =
+          (overScroll / (kBottomNavigationBarHeight * 5)).clamp(0.0, 1.0);
     } else {
       _scrollNotifier.value = 0.0;
     }
   }
 
+  // removed products from the animated grid
+  void _removeItems(List<ProductEntity> productsToRemove) {
+    for (var product in productsToRemove) {
+      final index = _products.indexWhere((p) => p.itemId == product.itemId);
+      if (index != -1) {
+        _gridKey.currentState?.removeItem(
+          index,
+          (context, animation) => ScaleTransition(
+            scale: animation,
+            child: FavoriteVerticalCard(
+              isCardSelected: false,
+              isEditBtnClicked: false,
+              product: product,
+            ),
+          ),
+        );
+      }
+      _products.removeAt(index);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isDark = NFunctions.isDarkMode(context);
     final isTablet = Responsive.isTablet(context);
+    final selectedFavoriteProductsCubit = SelectedFavoriteProductsCubit();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => IsEditBtnClickedCubit(),
+          create: (context) => EditBtnClickedCubit(),
         ),
         BlocProvider(
-          create: (context) => IsFavoriteCardClickedCubit(),
+          create: (context) => selectedFavoriteProductsCubit,
         ),
       ],
       child: Scaffold(
@@ -76,90 +98,98 @@ class _FavoriteState extends State<Favorite> {
             children: [
               // BOTTOM FADE LOGO
               FadeLogo(logoNotifire: _scrollNotifier),
-              CustomScrollView(
-                controller: _scrollController,
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  CupertinoSliverNavigationBar(
-                    backgroundColor:
-                        isDark ? NColors.black.withOpacity(0.5) : NColors.light,
-                    automaticallyImplyLeading: false,
-                    stretch: true,
-                    largeTitle: Text(
-                      "favorite".tr(context),
-                      style: TextStyle(
-                        color: isDark ? NColors.light : NColors.dark,
+              Builder(
+                builder: (context) {
+                  // multiple bloc builder
+                  final favoriteProductSet =
+                      context.watch<SelectedFavoriteProductsCubit>().state;
+                  final isEditBtnClicked =
+                      context.watch<EditBtnClickedCubit>().state;
+                  return CustomScrollView(
+                    controller: _scrollController,
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      // SLIVER APP BAR AS IOS STYLE
+                      FavoriteAppBar(
+                        selectedFavoriteProductsCubit:
+                            selectedFavoriteProductsCubit,
+                        favoritProductSet: favoriteProductSet,
+                        removeItems: _removeItems,
                       ),
-                    ),
-                    leading: BlocBuilder<IsEditBtnClickedCubit, bool>(
-                      builder: (context, state) {
-                        return AnimatedOpacity(
-                          duration: const Duration(milliseconds: 200),
-                          opacity: state ? 1.0 : 0.0,
-                          child: const IconButton(
-                            onPressed: null,
-                            color: NColors.primary,
-                            icon: Icon(Iconsax.trash),
-                          ),
-                        );
-                      },
-                    ),
-                    trailing: BlocBuilder<IsEditBtnClickedCubit, bool>(
-                      builder: (context, state) {
-                        return AnimatedCrossFade(
-                          duration: const Duration(milliseconds: 150),
-                          crossFadeState: state
-                              ? CrossFadeState.showSecond
-                              : CrossFadeState.showFirst,
-                          alignment: Alignment.center,
-                          firstChild: GestureDetector(
-                            onTap: () {
-                              context.read<IsEditBtnClickedCubit>().isCicked();
-                            },
-                            child: Text(
-                              "Edit",
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                          ),
-                          secondChild: GestureDetector(
-                            onTap: () {
-                              context.read<IsEditBtnClickedCubit>().isCicked();
-                            },
-                            child: Text(
-                              "Done",
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                      right: 8.0,
-                      top: 16.0,
-                      bottom: kBottomNavigationBarHeight * 1.5,
-                    ),
-                    sliver: SliverAnimatedGrid(
-                      initialItemCount: test.length,
-                      itemBuilder: (context, index, animation) =>
-                          BlocBuilder<IsEditBtnClickedCubit, bool>(
-                        builder: (context, state) {
-                          return FavoriteVerticalCard(
-                            isClicked: state,
-                            index: index,
-                          );
-                        },
-                      ),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: isTablet ? 3 : 2,
-                        mainAxisSpacing: 35,
-                        mainAxisExtent: NSizes.cradVerticallHeight,
-                      ),
-                    ),
-                  )
-                ],
+                      // THE ANIMTED GRID VIEW
+                      SliverPadding(
+                        padding: const EdgeInsets.only(
+                          left: NSizes.xs,
+                          right: NSizes.xs,
+                          top: NSizes.md,
+                          bottom: kBottomNavigationBarHeight * 1.5,
+                        ),
+                        sliver: BlocBuilder<FavoriteProductBloc,
+                            FavoriteProductState>(
+                          builder: (context, state) {
+                            if (state is GetFavoriteProductsSuccess) {
+                              _products = List.from(state.products);
+                              if (state.products.isEmpty) {
+                                return SliverToBoxAdapter(
+                                  child: Column(
+                                    children: [
+                                      const EmptyPage(
+                                        image: NImages.emptyPage,
+                                        text: "noProductsFound",
+                                      ),
+                                      Text(
+                                        'noFavoriteProductsFound'.tr(context),
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }
+                              return SliverAnimatedGrid(
+                                key: _gridKey,
+                                initialItemCount: state.products.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: isTablet ? 3 : 2,
+                                  mainAxisSpacing: 35,
+                                  mainAxisExtent: NSizes.cradVerticallHeight,
+                                ),
+                                itemBuilder: (_, index, animation) {
+                                  final isSelected = favoriteProductSet
+                                      .contains(state.products[index]);
+                                  return GestureDetector(
+                                    onTap: () {
+                                      if (isEditBtnClicked) {
+                                        context
+                                            .read<
+                                                SelectedFavoriteProductsCubit>()
+                                            .toggleSelection(
+                                                state.products[index]);
+                                      }
+                                    },
+                                    child: ScaleTransition(
+                                      scale: animation,
+                                      key: UniqueKey(),
+                                      child: FavoriteVerticalCard(
+                                        isCardSelected: isSelected,
+                                        isEditBtnClicked: isEditBtnClicked,
+                                        product: state.products[index],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                            return const SliverToBoxAdapter();
+                          },
+                        ),
+                      )
+                    ],
+                  );
+                },
               ),
             ],
           ),
@@ -167,11 +197,4 @@ class _FavoriteState extends State<Favorite> {
       ),
     );
   }
-}
-
-class TestData {
-  final bool testFlag;
-  final String name;
-
-  TestData({required this.testFlag, required this.name});
 }

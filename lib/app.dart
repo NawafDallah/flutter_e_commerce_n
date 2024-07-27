@@ -11,6 +11,9 @@ import 'core/cubits/middleware/middleware_cubit.dart';
 import 'core/cubits/network/network_connection_cubit.dart';
 import 'core/cubits/theme_mode/theme_mode_cubit.dart';
 import 'feature/auth/presentation/bloc/auth_bloc/auth_bloc_bloc.dart';
+import 'feature/browse/presentation/bloc/browse/home_bloc/browse_bloc.dart';
+import 'feature/browse/presentation/bloc/browse/product_category_bloc/product_category_bloc.dart';
+import 'feature/favorite/presentation/bloc/local_product_bloc/favorite_product_bloc.dart';
 import 'init_dependencies.dart';
 
 class App extends StatelessWidget {
@@ -36,6 +39,15 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<AuthBloc>(),
         ),
+        BlocProvider(
+          create: (context) => sl<HomeBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<ProductCategoryBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<FavoriteProductBloc>(),
+        ),
       ],
       child: ScreenUtilInit(
           designSize: const Size(360, 690),
@@ -52,7 +64,7 @@ class App extends StatelessWidget {
               theme: NAppTheme.lightTheme,
               darkTheme: NAppTheme.darkTheme,
               debugShowCheckedModeBanner: false,
-              locale: localizationState.locale, 
+              locale: localizationState.locale,
               // List all of the app's supported locales here
               supportedLocales: const [
                 Locale('en'),

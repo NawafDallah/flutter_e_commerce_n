@@ -7,7 +7,7 @@ import '../../feature/auth/presentation/screen/reset_password.dart';
 import '../../feature/auth/presentation/screen/signup.dart';
 import '../../feature/auth/presentation/screen/verifacation_code.dart';
 import '../../feature/browse/presentation/screen/catigories_page.dart';
-import '../../navigation_bar.dart';
+import '../../feature/browse/presentation/screen/navigation_bar.dart';
 import '../../feature/on_boarding/presentation/bloc/on_boarding_providers.dart';
 import 'routes.dart';
 
@@ -57,9 +57,11 @@ class AppRouter {
           builder: (_) => const CustomNavigationBar(),
         );
       case Routes.catigory:
+        final args = routeSettings.arguments as Map<String, dynamic>;
         return CupertinoPageRoute(
           builder: (_) => CatigoriesPage(
-            index: routeSettings.arguments as int,
+            index: args['index'],
+            categories: args['categories'],
           ),
         );
       default:

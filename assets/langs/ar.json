@@ -70,5 +70,14 @@
   "store": "المتجر",
   "featured": "مختارات",
   "populerProduct": "المنتجات الشائعة",
-  "favorite": "المفضلة"
+  "favorite": "المفضلة",
+  "edit": "تعديل",
+  "done": "تم",
+  "unlikeProducts": "إزالة المنتج من المفضلة",
+  "cancel": "إلغاء",
+  "unlike": "إزالة",
+  "WantToUnlikeTheseProducts": "هل أنت متأكد من إزالة هذه المنتجات من المفضلة؟",
+  "noCatigoriesFound": "لا يوجد تصنيفات",
+  "noProductsFound": "لا يوجد منتجات في هذا القسم",
+  "noFavoriteProductsFound": "قم بإضافة المنتجات عن ظريق الضغط على الايقونة ❤️ الموجودة على كرت المنتج"
 }

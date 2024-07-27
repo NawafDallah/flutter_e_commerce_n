@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 
+import '../internet_exception.dart';
+
 class AuthException {
   const AuthException._(); // TO AVOID CREATE AN INSTANCE
 
@@ -26,27 +28,27 @@ class AuthException {
               .contains("Fill in required fields")) {
             throw DioException(
               requestOptions: e.requestOptions,
-              message: "Thisfieldisrequired",
+              message: "thisfieldisrequired",
             );
           } else {
             throw DioException(
               requestOptions: e.requestOptions,
-              message: "Invalidemailaddress",
+              message: "invalidemailaddress",
             );
           }
         case 401:
           throw DioException(
             requestOptions: e.requestOptions,
-            message: "Thisfieldisrequired",
+            message: "thisfieldisrequired",
           );
         default:
           throw DioException(
             requestOptions: e.requestOptions,
-            message: "SomethingWrong",
+            message: "somethingWrong",
           );
       }
     } else {
-      throw internetException(e);
+      throw InternetException.internetException(e);
     }
   }
 
@@ -75,11 +77,11 @@ class AuthException {
         default:
           throw DioException(
             requestOptions: e.requestOptions,
-            message: "SomethingWrong",
+            message: "somethingWrong",
           );
       }
     } else {
-      throw internetException(e);
+      throw InternetException.internetException(e);
     }
   }
 
@@ -92,12 +94,12 @@ class AuthException {
               .contains("Fill in required fields")) {
             throw DioException(
               requestOptions: e.requestOptions,
-              message: "Thisfieldisrequired",
+              message: "thisfieldisrequired",
             );
           } else {
             throw DioException(
               requestOptions: e.requestOptions,
-              message: "Invalidemailaddress",
+              message: "invalidemailaddress",
             );
           }
         case 401:
@@ -113,11 +115,11 @@ class AuthException {
         default:
           throw DioException(
             requestOptions: e.requestOptions,
-            message: "SomethingWrong",
+            message: "somethingWrong",
           );
       }
     } else {
-      throw internetException(e);
+      throw InternetException.internetException(e);
     }
   }
 
@@ -127,11 +129,11 @@ class AuthException {
         default:
           throw DioException(
             requestOptions: e.requestOptions,
-            message: "SomethingWrong",
+            message: "somethingWrong",
           );
       }
     } else {
-      throw internetException(e);
+      throw InternetException.internetException(e);
     }
   }
 
@@ -144,12 +146,12 @@ class AuthException {
               .contains("Fill in required fields")) {
             throw DioException(
               requestOptions: e.requestOptions,
-              message: "Thisfieldisrequired",
+              message: "thisfieldisrequired",
             );
           } else {
             throw DioException(
               requestOptions: e.requestOptions,
-              message: "Invalidemailaddress",
+              message: "invalidemailaddress",
             );
           }
         case 404:
@@ -160,11 +162,11 @@ class AuthException {
         default:
           throw DioException(
             requestOptions: e.requestOptions,
-            message: "SomethingWrong",
+            message: "somethingWrong",
           );
       }
     } else {
-      throw internetException(e);
+      throw InternetException.internetException(e);
     }
   }
 
@@ -177,7 +179,7 @@ class AuthException {
               .contains("Fill in required fields")) {
             throw DioException(
               requestOptions: e.requestOptions,
-              message: "Thisfieldisrequired",
+              message: "thisfieldisrequired",
             );
           } else {
             throw DioException(
@@ -188,28 +190,11 @@ class AuthException {
         default:
           throw DioException(
             requestOptions: e.requestOptions,
-            message: "SomethingWrong",
+            message: "somethingWrong",
           );
       }
     } else {
-      throw internetException(e);
-    }
-  }
-
-  static DioException internetException(DioException e) {
-    if (e.type == DioExceptionType.connectionTimeout ||
-        e.type == DioExceptionType.receiveTimeout ||
-        e.type == DioExceptionType.connectionError ||
-        e.type == DioExceptionType.sendTimeout) {
-      throw DioException(
-        requestOptions: e.requestOptions,
-        message: "noInternetConnection",
-      );
-    } else {
-      throw DioException(
-        requestOptions: e.requestOptions,
-        message: "SomethingWrong",
-      );
+      throw InternetException.internetException(e);
     }
   }
 }

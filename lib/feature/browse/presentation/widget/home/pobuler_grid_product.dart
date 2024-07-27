@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../../../../../common/utils/constants/sizes.dart';
 import '../../../../../common/widgets/responsive.dart';
+import '../../../../../core/entities/products_entity.dart';
 import '../product_card/product_vertical_card.dart';
 
 class PopulerGridItems extends StatelessWidget {
   const PopulerGridItems({
     super.key,
+    required this.populars,
   });
+
+  final List<ProductEntity> populars;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class PopulerGridItems extends StatelessWidget {
         mainAxisExtent: NSizes.cradVerticallHeight,
       ),
       itemBuilder: (context, index) {
-        return const ProductVerticalCard();
+        return ProductVerticalCard(product: populars[index]);
       },
     );
   }

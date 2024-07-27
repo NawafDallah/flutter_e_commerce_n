@@ -70,5 +70,14 @@
   "store": "Store",
   "featured": "Featured",
   "populerProduct": "Populer product",
-  "favorite": "Favorite"
+  "favorite": "Favorite",
+  "edit": "Edit",
+  "done": "Done",
+  "unlikeProducts": "Unlike products",
+  "cancel": "Cancel",
+  "unlike": "Unlike",
+  "WantToUnlikeTheseProducts": "Are you sure you want to unlike these products?",
+  "noCatigoriesFound": "No catigories found",
+  "noProductsFound": "No Products Found",
+  "noFavoriteProductsFound": "Add products by clicking on the ❤️ icon on the product card"
 }

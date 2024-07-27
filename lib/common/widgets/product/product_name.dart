@@ -10,14 +10,11 @@ class ProductName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6.0),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyLarge,
-        overflow: TextOverflow.ellipsis,
-        maxLines: 1,
-      ),
+    return Text(
+      title,
+      style: Theme.of(context).textTheme.bodyLarge,
+      overflow: TextOverflow.ellipsis,
+      maxLines: 1,
     );
   }
 }

@@ -1,20 +1,29 @@
-import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter/material.dart';
 
+import '../../../../../common/utils/constants/app_api.dart';
 import '../../../../../common/utils/constants/colors.dart';
 import '../../../../../common/utils/constants/sizes.dart';
 import '../../../../../common/utils/functions/functions.dart';
 import '../../../../../common/widgets/responsive.dart';
+import '../../../domain/entity/banners_entity.dart';
 
 class SliderBanner extends StatelessWidget {
   const SliderBanner({
     super.key,
     required PageController pageController,
     required this.pageNotifire,
+    required this.banners,
+    required this.homeFetchedNotifier,
   }) : _pageController = pageController;
 
   final PageController _pageController;
   final ValueNotifier<double> pageNotifire;
+  final List<BannerEntity> banners;
+  final bool homeFetchedNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -24,31 +33,88 @@ class SliderBanner extends StatelessWidget {
       children: [
         SizedBox(
           height: NFunctions.screenHeight(context) * 0.25,
-          child: PageView.builder(
-              physics: const BouncingScrollPhysics(),
-              controller: _pageController,
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return ValueListenableBuilder(
-                    valueListenable: pageNotifire,
-                    builder: (_, value, __) {
-                      return Container(
-                        margin:
-                            const EdgeInsets.symmetric(horizontal: NSizes.md),
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(NSizes.borderRadiusLg),
-                          image: DecorationImage(
-                            alignment: AlignmentDirectional(
-                                (value - index).abs(), (value - index).abs()),
-                            fit: BoxFit.cover,
-                            image: const AssetImage(
-                                "assets/images/banners/banner_2.jpg"),
-                          ),
-                        ),
-                      );
-                    });
-              }),
+          child: AnimationLimiter(
+            child: PageView.builder(
+                physics: const BouncingScrollPhysics(),
+                controller: _pageController,
+                itemCount: banners.length,
+                itemBuilder: (context, index) {
+                  return ValueListenableBuilder(
+                      valueListenable: pageNotifire,
+                      builder: (_, value, __) {
+                        return homeFetchedNotifier
+                            ? AnimationConfiguration.staggeredList(
+                                position: 0,
+                                child: SlideAnimation(
+                                  verticalOffset: -150,
+                                  // horizontalOffset: -50,
+                                  duration: const Duration(milliseconds: 250),
+                                  child: FadeInAnimation(
+                                    duration: const Duration(milliseconds: 600),
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: NSizes.md),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            NSizes.borderRadiusLg),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                          NSizes.borderRadiusLg,
+                                        ),
+                                        child: CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          alignment: Alignment(
+                                            (value - index).abs(),
+                                            (value - index).abs(),
+                                          ),
+                                          errorWidget: (_, url, error) =>
+                                              const Center(
+                                            child: Icon(Icons.error_outline),
+                                          ),
+                                          progressIndicatorBuilder: (_, url,
+                                                  progress) =>
+                                              const CupertinoActivityIndicator(),
+                                          imageUrl:
+                                              "${AppApi.bannersImage}/${banners[index].bannerImage}",
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: NSizes.md),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      NSizes.borderRadiusLg),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                    NSizes.borderRadiusLg,
+                                  ),
+                                  child: CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    alignment: Alignment(
+                                      (value - index).abs(),
+                                      (value - index).abs(),
+                                    ),
+                                    errorWidget: (_, url, error) =>
+                                        const Center(
+                                      child: Icon(Icons.error_outline),
+                                    ),
+                                    progressIndicatorBuilder:
+                                        (_, url, progress) =>
+                                            const CupertinoActivityIndicator(),
+                                    imageUrl:
+                                        "${AppApi.bannersImage}/${banners[index].bannerImage}",
+                                  ),
+                                ),
+                              );
+                      });
+                }),
+          ),
         ),
         const SizedBox(height: NSizes.spaceBtwItems),
         SmoothPageIndicator(

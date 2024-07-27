@@ -3,8 +3,6 @@
 class NImages {
 
   // -- App Logos
-  static const String darkAppLogo = "assets/logos/t-store-splash-logo-black.png";
-  static const String lightAppLogo = "assets/logos/t-store-splash-logo-white.png";
   static const String appLogo = "assets/logos/n-store-splash-logo-dark.png";
 
   // -- Social Logos
@@ -127,6 +125,8 @@ class NImages {
   static const String productImage77= "assets/images/products/slipper-product.png";
 
 
+  // -- Not Empty Items
+  static const String emptyPage = "assets/images/animations/sammy-line-workout.gif";
 
 
   // -- Product Reviews

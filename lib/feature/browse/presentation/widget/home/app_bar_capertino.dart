@@ -31,7 +31,14 @@ class AppBarCupertino extends StatelessWidget {
       trailing: ValueListenableBuilder(
           valueListenable: scrollNotifire,
           builder: (_, value, __) {
-            return FadeIcon(value: value);
+            return FadeIcon(
+              value: value,
+              icon: const Icon(
+                Iconsax.search_normal,
+                size: 28,
+                color: NColors.primary,
+              ),
+            );
           }),
       largeTitle: Padding(
         padding: EdgeInsets.only(
@@ -94,25 +101,23 @@ class LeadingAppBar extends StatelessWidget {
 }
 
 class FadeIcon extends StatelessWidget {
-  final double value;
   const FadeIcon({
     super.key,
     required this.value,
+    required this.icon,
   });
+  final double value;
+  final Widget icon;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedOpacity(
-      opacity: value >= kToolbarHeight? 1.0 : 0.0,
+      opacity: value >= kToolbarHeight ? 1.0 : 0.0,
       duration: const Duration(milliseconds: 200),
       child: IconButton(
         padding: EdgeInsets.zero,
         onPressed: () {},
-        icon: const Icon(
-          Iconsax.search_normal,
-          size: 28,
-          color: NColors.primary,
-        ),
+        icon: icon,
       ),
     );
   }

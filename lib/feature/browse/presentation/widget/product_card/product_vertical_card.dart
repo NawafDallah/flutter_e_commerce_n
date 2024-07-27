@@ -1,24 +1,37 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../common/utils/constants/app_api.dart';
 import '../../../../../common/utils/constants/colors.dart';
 import '../../../../../common/utils/constants/sizes.dart';
 import '../../../../../common/utils/functions/functions.dart';
-import '../../../../../common/widgets/responsive.dart';
+import '../../../../../common/widgets/product/product_discount.dart';
+import '../../../../../core/entities/products_entity.dart';
 import 'favorite_icon.dart';
-import 'product_brand_rating.dart';
-import 'product_name.dart';
-import 'product_price.dart';
-import 'stacked_circle_avatar.dart';
+import '../../../../../common/widgets/product/product_brand_rating.dart';
+import '../../../../../common/widgets/product/product_name.dart';
 
 class ProductVerticalCard extends StatelessWidget {
-  const ProductVerticalCard({super.key});
+  const ProductVerticalCard({super.key, required this.product});
+
+  final ProductEntity product;
+
+  double? _oldPrice() {
+    if (product.itemDescount != 0) {
+      return ((product.itemDescount * product.itemPrice) / 100) +
+          product.itemPrice;
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
     final isDark = NFunctions.isDarkMode(context);
-    final isSmallMobile = Responsive.isSmallMobile(context);
+    final isArabic = NFunctions.isArabic(context);
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: isSmallMobile ? 8.0 : 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 6.0),
       decoration: BoxDecoration(
         border: Border.symmetric(
           vertical: BorderSide(
@@ -33,72 +46,73 @@ class ProductVerticalCard extends StatelessWidget {
         children: [
           Column(
             children: [
-              Image.asset(
-                "assets/images/products/iphone_12_green.png",
+              CachedNetworkImage(
+                fit: BoxFit.contain,
+                errorWidget: (_, url, error) => const Center(
+                  child: Icon(Icons.error_outline),
+                ),
+                progressIndicatorBuilder: (_, url, progress) =>
+                    const CupertinoActivityIndicator(),
+                imageUrl: "${AppApi.productsImage}/${product.itemImage}",
                 height: 160,
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ProductName(title: "name of product"),
-                  SizedBox(height: NSizes.xs),
+                  ProductName(
+                    title: isArabic ? product.itemNameAr : product.itemNameEn,
+                  ),
+                  const SizedBox(height: NSizes.xs),
                   // PRODUCT BRAND AND RATING STAR
                   ProductBrandAndRating(
-                    brand: "brand",
+                    brand: product.itemBrand,
                     rating: 4.3554,
                   ),
-                  SizedBox(height: NSizes.xs),
+                  const SizedBox(height: NSizes.xs),
+                  product.itemDescount != 0
+                      ? Text(
+                          "${_oldPrice()!.toStringAsFixed(2).toString()} SR",
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: NSizes.md),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        )
+                      : const SizedBox(),
                   // PRODUCT PRICE AND DISCOUNT PRICE
-                  ProductPrice(price: 5680),
+                  Text(
+                    '${product.itemPrice.toStringAsFixed(2)} SR',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
                 ],
               ),
             ],
           ),
-          ...List.generate(
-            3.clamp(0, 3),
-            (index) => StackedCircleAvatar(
-              index: index,
-              isVertical: true,
-            ),
-          ),
-          const Positioned(
-            right: 5.0,
+          // ...List.generate(
+          //   3.clamp(0, 3),
+          //   (index) => StackedCircleAvatar(
+          //     index: index,
+          //     isVertical: true,
+          //   ),
+          // ),
+          Positioned(
+            right: 0.0,
             top: 0.0,
-            child: FavoriteIcon(),
+            child: FavoriteIcon(product: product),
           ),
-          const Positioned(
-            left: 10.0,
+          Positioned(
+            left: 0.0,
             top: 10.0,
-            child: ProductDicount(),
+            child: product.itemDescount == 0
+                ? const SizedBox()
+                : ProductDicount(discount: product.itemDescount),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ProductDicount extends StatelessWidget {
-  const ProductDicount({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 45,
-      height: 23,
-      decoration: BoxDecoration(
-        color: NColors.primary,
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(
-          NSizes.borderRadiusSm,
-        ),
-      ),
-      child: Center(
-        child: Text(
-          "15%",
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
       ),
     );
   }
