@@ -168,21 +168,24 @@ class _$FavoriteProductDao extends FavoriteProductDao {
 
   @override
   Future<List<FavoriteProductModel>> getFavoriteProduct() async {
-    return _queryAdapter.queryList('SELECT * FROM favorite_product',
-        mapper: (Map<String, Object?> row) => FavoriteProductModel(
-            itemId: row['itemId'] as int,
-            itemNameEn: row['itemNameEn'] as String,
-            itemNameAr: row['itemNameAr'] as String,
-            itemDescEn: row['itemDescEn'] as String,
-            itemDescAr: row['itemDescAr'] as String,
-            itemImage: row['itemImage'] as String,
-            itemActive: row['itemActive'] as int,
-            itemCount: row['itemCount'] as int,
-            itemPrice: row['itemPrice'] as double,
-            itemDescount: row['itemDescount'] as int,
-            catogaryId: row['catogaryId'] as int,
-            itemType: row['itemType'] as String,
-            itemBrand: row['itemBrand'] as String));
+    return _queryAdapter.queryList(
+      'SELECT * FROM favorite_product',
+      mapper: (Map<String, Object?> row) => FavoriteProductModel(
+        itemId: row['itemId'] as int,
+        itemNameEn: row['itemNameEn'] as String,
+        itemNameAr: row['itemNameAr'] as String,
+        itemDescEn: row['itemDescEn'] as String,
+        itemDescAr: row['itemDescAr'] as String,
+        itemImage: row['itemImage'] as String,
+        itemActive: row['itemActive'] as int,
+        itemCount: row['itemCount'] as int,
+        itemPrice: row['itemPrice'] as double,
+        itemDescount: row['itemDescount'] as int,
+        catogaryId: row['catogaryId'] as int,
+        itemType: row['itemType'] as String,
+        itemBrand: row['itemBrand'] as String,
+      ),
+    );
   }
 
   @override

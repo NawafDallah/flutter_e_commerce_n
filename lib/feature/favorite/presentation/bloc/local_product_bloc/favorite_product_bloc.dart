@@ -30,6 +30,8 @@ class FavoriteProductBloc
     on<DeleteFavoriteProductsEvent>(_deleteFavoriteProducts);
     on<ToggleFavoriteProductEvent>(_toggleFavoriteProduct);
 
+    // call it when init the bloc to retrieve the favorite 
+    // product and show it in browse feature.
     add(const GetSavedFavoriteProductEvent());
   }
 
@@ -50,6 +52,8 @@ class FavoriteProductBloc
     emit(GetFavoriteProductsSuccess(products: products));
   }
 
+  // add to favorite page or remove it from favorite page 
+  // from the home page product card.
   void _toggleFavoriteProduct(
     ToggleFavoriteProductEvent event,
     Emitter<FavoriteProductState> emit,

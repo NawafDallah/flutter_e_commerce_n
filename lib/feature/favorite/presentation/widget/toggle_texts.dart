@@ -20,7 +20,7 @@ class ToggleTrailingTexts extends StatelessWidget {
       duration: const Duration(milliseconds: 150),
       crossFadeState:
           isClicked ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-      alignment: const AlignmentDirectional(-1, 0.0),
+      alignment: const AlignmentDirectional(1, 0.0),
       firstChild: GestureDetector(
         onTap: () {
           context.read<EditBtnClickedCubit>().isCicked();

@@ -37,9 +37,23 @@ class FavoriteIcon extends StatelessWidget {
                   .read<FavoriteProductBloc>()
                   .add(ToggleFavoriteProductEvent(product: product));
             },
-            icon: Icon(
-              isFavorite ? Iconsax.heart5 : Iconsax.heart,
-              color: isFavorite ? Colors.red : null,
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              switchInCurve: Curves.easeInOutBack,
+              transitionBuilder: (child, animation) => ScaleTransition(
+                scale: animation,
+                child: child,
+              ),
+              child: isFavorite
+                  ? const Icon(
+                      key: ValueKey('heart5'),
+                      Iconsax.heart5,
+                      color: Colors.red,
+                    )
+                  : const Icon(
+                      key: ValueKey('heart'),
+                      Iconsax.heart,
+                    ),
             ),
           ),
         );
