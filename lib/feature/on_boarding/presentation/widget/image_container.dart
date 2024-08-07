@@ -19,6 +19,7 @@ class ImageContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = NFunctions.isDarkMode(context);
     final isArabic = NFunctions.isArabic(context);
+    final isTablet = Responsive.isTablet(context);
     final opacity = lerpDouble(1.0, 0.0, value.clamp(0.0, 1.0))!;
     return Opacity(
       opacity: opacity,
@@ -26,7 +27,7 @@ class ImageContainer extends StatelessWidget {
         transform: Responsive.isTablet(context)
             ? Matrix4.skew(0.0, value * -0.20)
             : Matrix4.skew(0.0, value * -0.30),
-        alignment: Alignment(value * 3, 0.0),
+        alignment: Alignment.center,
         width: NFunctions.screenWidth(context) * 0.8,
         height: NFunctions.screenHeight(context) * 0.35,
         decoration: BoxDecoration(
@@ -51,7 +52,7 @@ class ImageContainer extends StatelessWidget {
         child: Transform.rotate(
           angle: isArabic ? (pi / 3) * value : (pi / 2) * -value,
           child: Image(
-            alignment: Alignment(value * 3, 0.0),
+            alignment: Alignment(isTablet ? 0.0 : value * 3, 0.0),
             image: AssetImage(image),
           ),
         ),

@@ -13,6 +13,7 @@ import 'core/cubits/theme_mode/theme_mode_cubit.dart';
 import 'feature/auth/presentation/bloc/auth_bloc/auth_bloc_bloc.dart';
 import 'feature/browse/presentation/bloc/browse/home_bloc/browse_bloc.dart';
 import 'feature/browse/presentation/bloc/browse/product_category_bloc/product_category_bloc.dart';
+import 'feature/browse/presentation/bloc/settings/settings_bloc/settings_bloc.dart';
 import 'feature/favorite/presentation/bloc/local_product_bloc/favorite_product_bloc.dart';
 import 'init_dependencies.dart';
 
@@ -48,39 +49,57 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<FavoriteProductBloc>(),
         ),
+        BlocProvider(
+          create: (context) => sl<SettingsBloc>(),
+        ),
       ],
       child: ScreenUtilInit(
           designSize: const Size(360, 690),
-          splitScreenMode: true,
-          minTextAdapt: true,
           builder: (context, _) {
             final localizationState = context.watch<LocalizationCubit>().state;
             final themeModeState = context.watch<ThemeModeCubit>().state;
             final middlewareState = context.watch<MiddlewareCubit>().state;
-            return MaterialApp(
-              builder: DevicePreview.appBuilder,
-              title: 'e_commerce_n_flutter',
-              themeMode: themeModeState.themeMode,
-              theme: NAppTheme.lightTheme,
-              darkTheme: NAppTheme.darkTheme,
-              debugShowCheckedModeBanner: false,
-              locale: localizationState.locale,
-              // List all of the app's supported locales here
-              supportedLocales: const [
-                Locale('en'),
-                Locale('ar'),
-              ],
-              // These delegates make sure that the localization
-              // data for the proper language is loaded
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                // Built-in localization for text direction LTR/RTL
-                GlobalWidgetsLocalizations.delegate
-              ],
-              onGenerateRoute: AppRouter.onGenerateRoute,
-              initialRoute: middlewareState.middlewarePage,
+            return MediaQuery(
+              data: MediaQuery.of(context)
+                  .copyWith(textScaler: const TextScaler.linear(1.0)),
+              child: MaterialApp(
+                // builder: DevicePreview.appBuilder,
+                title: 'e_commerce_n_flutter',
+                themeMode: themeModeState.themeMode,
+                theme: NAppTheme.lightTheme,
+                darkTheme: NAppTheme.darkTheme,
+                debugShowCheckedModeBanner: false,
+                locale: localizationState.locale,
+                // List all of the app's supported locales here
+                supportedLocales: const [
+                  Locale('en'),
+                  Locale('ar'),
+                ],
+                // These delegates make sure that the localization
+                // data for the proper language is loaded
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  // Built-in localization for text direction LTR/RTL
+                  GlobalWidgetsLocalizations.delegate
+                ],
+                // Returns a locale which will be used by the app
+                localeResolutionCallback: (locale, supportedLocales) {
+                  // Check if the current device locale is supported
+                  for (var supportedLocale in supportedLocales) {
+                    if (supportedLocale.languageCode == locale!.languageCode &&
+                        supportedLocale.countryCode == locale.countryCode) {
+                      return supportedLocale;
+                    }
+                  }
+                  // If the locale of the device is not supported, use the first one
+                  // from the list (English, in this case).
+                  return supportedLocales.first;
+                },
+                onGenerateRoute: AppRouter.onGenerateRoute,
+                initialRoute: middlewareState.middlewarePage,
+              ),
             );
           }),
     );

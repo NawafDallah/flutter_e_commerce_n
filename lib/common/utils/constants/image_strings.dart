@@ -127,6 +127,7 @@ class NImages {
 
   // -- Not Empty Items
   static const String emptyPage = "assets/images/animations/sammy-line-workout.gif";
+  static const String noConnection = "assets/images/on_boarding_images/sammy-line-no-connection.gif";
 
 
   // -- Product Reviews

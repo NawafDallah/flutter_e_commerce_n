@@ -24,7 +24,7 @@ class HeaderAuth extends StatelessWidget {
         Text(
           title.tr(context),
           style:  Theme.of(context).textTheme.headlineMedium!
-              .copyWith(fontSize:isTablet? 36 : 24),
+              .copyWith(fontSize:isTablet? 36 : 30),
         ),
         // SPACE
         const SizedBox(height: NSizes.spaceBtwItems),

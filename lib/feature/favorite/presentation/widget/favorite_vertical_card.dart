@@ -114,8 +114,9 @@ class FavoriteVerticalCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: 5.0,
-            bottom: 10.0,
+            right: isArabic ? null : 0.0,
+            left: isArabic ? 0.0 : null,
+            bottom: 0.0,
             child: Transform.scale(
               scale: 1.3,
               child: AnimatedOpacity(

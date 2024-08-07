@@ -19,6 +19,10 @@ class AppApi {
 
   /////////////////////// Browse ///////////////////////
   static const String home = "$secretAPIKey/browse/home.php";
-  // needs categoryId=?&page=?&itemsPerPage=?
+  // needs categoryId=?&page=?&itemsPerPage=? ->
   static const String products = "$secretAPIKey/browse/item.php?";
+  // needs userId=? ->
+  static const String updateUser = "$secretAPIKey/browse/update_user.php?";
+  // needs userId=? ->
+  static const String deleteUser = "$secretAPIKey/browse/delete_user.php?";
 }

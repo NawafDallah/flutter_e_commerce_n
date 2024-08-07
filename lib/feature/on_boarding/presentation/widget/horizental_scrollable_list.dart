@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_e_commerce_n_1/common/utils/constants/sizes.dart';
 import 'image_container.dart';
 import 'on_boarding_text.dart';
 
@@ -31,7 +31,7 @@ class HorizentalScrollablePage extends StatelessWidget {
               value: value,
             ),
           ),
-          SizedBox(height: 50.h),
+          const SizedBox(height: NSizes.xl * 2),
           Expanded(
             flex: 3,
             child: OnBordingText(

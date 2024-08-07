@@ -6,6 +6,7 @@ import 'common/utils/constants/colors.dart';
 import 'common/utils/constants/sizes.dart';
 import 'common/utils/functions/functions.dart';
 import 'common/widgets/responsive.dart';
+import 'feature/browse/presentation/screen/settings.dart';
 import 'feature/favorite/presentation/screen/favorite.dart';
 import 'feature/browse/presentation/bloc/browse/home_bloc/browse_bloc.dart';
 import 'core/cubits/nav_bar_index/nav_bar_index_cubit.dart';
@@ -22,7 +23,7 @@ class CustomNavigationBar extends StatelessWidget {
       const Home(),
       Container(color: Colors.yellow),
       const Favorite(),
-      Container(color: Colors.red),
+      const Settings(),
     ];
     List bottomNavBarIcons = [
       Iconsax.home,

@@ -40,12 +40,14 @@ class ProductPrice extends StatelessWidget {
                     NSizes.borderRadiusSm,
                   ),
                 ),
-                child: Center(
-                  child: Text(
-                    "$discount%",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                child: FittedBox(
+                  child: Center(
+                    child: Text(
+                      "$discount%",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
                 ),
               ),

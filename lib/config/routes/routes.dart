@@ -6,12 +6,12 @@ class Routes {
   // auth
   static const String login = '/login';
   static const String signup = '/signup';
-  static const String forgetPassword = '/forget_password'; 
-  static const String verifyCode = '/verify_code'; 
-  static const String resetPassword = '/reset_password'; 
-  // home
+  static const String forgetPassword = '/forget_password';
+  static const String verifyCode = '/verify_code';
+  static const String resetPassword = '/reset_password';
+  // browse
   static const String navigationBar = '/navigation_bar';
-  static const String home = '/home';
   static const String catigory = '/catigory';
-  static const String favorite = '/favorite';
+  static const String profile = '/profile';
+  
 }

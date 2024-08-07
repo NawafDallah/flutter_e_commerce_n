@@ -42,4 +42,42 @@ class BrowseException {
       throw InternetException.internetException(e);
     }
   }
+
+  static DioException updateUser(DioException e) {
+    if (e.response != null) {
+      switch (e.response!.statusCode) {
+        case 400:
+          throw DioException(
+            requestOptions: e.requestOptions,
+            message: "failedToUpdateUserInfo",
+          );
+        default:
+          throw DioException(
+            requestOptions: e.requestOptions,
+            message: "somethingWrong",
+          );
+      }
+    } else {
+      throw InternetException.internetException(e);
+    }
+  }
+
+  static DioException deleteUser(DioException e) {
+    if (e.response != null) {
+      switch (e.response!.statusCode) {
+        case 400:
+          throw DioException(
+            requestOptions: e.requestOptions,
+            message: "failedToDeleteUser",
+          );
+        default:
+          throw DioException(
+            requestOptions: e.requestOptions,
+            message: "somethingWrong",
+          );
+      }
+    } else {
+      throw InternetException.internetException(e);
+    }
+  }
 }

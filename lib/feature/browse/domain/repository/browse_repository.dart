@@ -13,4 +13,14 @@ abstract interface class BrowseRepository {
     required int page,
     required int itemsPerPage,
   });
+  // DELETE USER FROM DATA-BASE
+  Future<Either<Failure, void>> deleteUser({
+    required int userId,
+  });
+  // UPDATE USER INFO ON DATA-BASE
+  Future<Either<Failure, void>> updateUser({
+    required int userId,
+    required int userPhone,
+    required String userName,
+  });
 }

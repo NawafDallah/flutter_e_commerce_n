@@ -66,7 +66,8 @@ class _CatigoriesPageState extends State<CatigoriesPage>
           itemsPerPage: _itemsPerPage,
         ));
   }
-  // I will work later on pagination
+
+  /// I will work later on pagination
   // _scrollListener() {
   //   if (_scrollController.position.maxScrollExtent ==
   //       _scrollController.position.pixels) {

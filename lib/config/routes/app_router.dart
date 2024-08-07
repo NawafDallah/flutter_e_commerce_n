@@ -7,6 +7,7 @@ import '../../feature/auth/presentation/screen/reset_password.dart';
 import '../../feature/auth/presentation/screen/signup.dart';
 import '../../feature/auth/presentation/screen/verifacation_code.dart';
 import '../../feature/browse/presentation/screen/catigories_page.dart';
+import '../../feature/browse/presentation/screen/profile.dart';
 import '../../navigation_bar.dart';
 import '../../feature/on_boarding/presentation/bloc/on_boarding_providers.dart';
 import 'routes.dart';
@@ -51,7 +52,7 @@ class AppRouter {
           ),
         );
 
-      /// HOME PAGES
+      /// BROWSE PAGES
       case Routes.navigationBar:
         return CupertinoPageRoute(
           builder: (_) => const CustomNavigationBar(),
@@ -63,6 +64,10 @@ class AppRouter {
             index: args['index'],
             categories: args['categories'],
           ),
+        );
+      case Routes.profile:
+        return CupertinoPageRoute(
+          builder: (_) => const Profile(),
         );
       default:
         return null;

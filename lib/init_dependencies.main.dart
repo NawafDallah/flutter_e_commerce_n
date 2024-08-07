@@ -132,6 +132,8 @@ _initBrowse() {
     /// use cases
     ..registerFactory(() => GetHomeDataCase(browseRepository: sl()))
     ..registerFactory(() => GetProductsCase(browseRepository: sl()))
+    ..registerFactory(() => DeleteUserCase(browseRepository: sl()))
+    ..registerFactory(() => UpdateUserCase(browseRepository: sl()))
 
     /// bloc
     ..registerLazySingleton<HomeBloc>(
@@ -142,6 +144,12 @@ _initBrowse() {
     ..registerLazySingleton<ProductCategoryBloc>(
       () => ProductCategoryBloc(
         getProductsCase: sl(),
+      ),
+    )
+    ..registerLazySingleton<SettingsBloc>(
+      () => SettingsBloc(
+        deleteUserCase: sl(),
+        updateUserCase: sl(),
       ),
     );
 }

@@ -1,3 +1,6 @@
+// import 'dart:async';
+
+import 'package:flutter_e_commerce_n_1/common/utils/constants/image_strings.dart';
 import 'package:flutter_e_commerce_n_1/common/utils/extensions/translate_x_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../common/utils/constants/sizes.dart';
 import '../../../../common/utils/functions/functions.dart';
+import '../../../../common/widgets/empty_page.dart';
 import '../../../../common/widgets/responsive.dart';
+// import '../../domain/entity/banners_entity.dart';
 import '../bloc/browse/home_bloc/browse_bloc.dart';
 import '../widget/home/app_bar_capertino.dart';
 import '../widget/home/catigories.dart';
@@ -39,7 +44,6 @@ class _HomeState extends State<Home> {
     _scrollController = ScrollController()..addListener(_scrollListener);
     _pageController = PageController(viewportFraction: 0.85)
       ..addListener(_pageListener);
-    // sliderBannerTimer();
     super.initState();
   }
 
@@ -85,10 +89,10 @@ class _HomeState extends State<Home> {
     }
   }
 
-  // void sliderBannerTimer() {
+  // void sliderBannerTimer(List<BannerEntity> banners) {
   //   _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
   //     if (_pageController.hasClients && _pageController.page != null) {
-  //       if (_pageController.page!.toInt() < 4) {
+  //       if (_pageController.page!.toInt() < banners.length - 1) {
   //         _pageController.nextPage(
   //           duration: const Duration(milliseconds: 850),
   //           curve: Curves.easeInOut,
@@ -126,6 +130,7 @@ class _HomeState extends State<Home> {
                   return ShimmerHomePage(scrollController: _scrollController);
                 }
                 if (state is HomeDataSuccessStata) {
+                  // sliderBannerTimer(state.homeData.banners);
                   return CustomScrollView(
                     physics: const BouncingScrollPhysics(),
                     controller: _scrollController,
@@ -265,19 +270,9 @@ class _HomeState extends State<Home> {
                     ],
                   );
                 }
-                return Center(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        "assets/images/on_boarding_images/sammy-line-no-connection.gif",
-                      ),
-                      Text(
-                        "somethingWrong".tr(context),
-                        style: Theme.of(context).textTheme.headlineMedium,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
+                return const EmptyPage(
+                  image: NImages.noConnection,
+                  text: "somethingWrong",
                 );
               },
             ),

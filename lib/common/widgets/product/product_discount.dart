@@ -12,7 +12,7 @@ class ProductDicount extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Container(
       width: 45,
-      height: 23,
+      height: 25,
       decoration: BoxDecoration(
         color: NColors.primary,
         shape: BoxShape.rectangle,
@@ -20,12 +20,14 @@ class ProductDicount extends StatelessWidget {
           NSizes.borderRadiusSm,
         ),
       ),
-      child: Center(
-        child: Text(
-          "${discount.toString()}%",
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+      child: FittedBox(
+        child: Center(
+          child: Text(
+            "${discount.toString()}%",
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
         ),
       ),
     );
