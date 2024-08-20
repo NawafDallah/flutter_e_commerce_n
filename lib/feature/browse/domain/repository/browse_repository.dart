@@ -7,7 +7,7 @@ import '../../../../core/entities/products_entity.dart';
 abstract interface class BrowseRepository {
   // GET ALL HOME DATA FROM DATA-BASE
   Future<Either<Failure, HomeEntity>> getHomeData();
-  // GET ALL PRODUCTS FROM DATA-BASE
+  // GET ALL PRODUCTS IN STORE PAGE FROM DATA-BASE
   Future<Either<Failure, List<ProductEntity>>> getProducts({
     required int categoryId,
     required int page,
@@ -24,3 +24,5 @@ abstract interface class BrowseRepository {
     required String userName,
   });
 }
+
+

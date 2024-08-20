@@ -48,6 +48,7 @@
   "verificationCodeExpired": "انتهت صلاحية رمز التحقق",
   "invalidCode": "رمز تحقق خاطئ",
   "verificationCodeRequired": "رمز التحقق مطلوب",
+  "verificationAccount": "يجب التحقق من حسابك أولا باستخدام رمز التحقق المرسل إليك",
   "resendEmail": "إعادة إرسال",
   "don'tReseaveTheVerificationCode": "ما استلمت رمز التحقق؟",
   "loginTitle": "أهلا بك",
@@ -96,8 +97,10 @@
   "aboutApp": "عن التطبيق",
   "aboutUs": "من نحن",
   "contantUs": "تواصل معنا",
-  "yse": "نعم",
+  "yes": "نعم",
   "areYouSure": "هل انت متأكد",
   "logout": "تسجيل الخروج",
-  "deleteAccount": "حذف الحساب"
+  "deleteAccount": "حذف الحساب",
+  "description": "الوصف",
+  "addToCart": "أضف الى السلة"
 }

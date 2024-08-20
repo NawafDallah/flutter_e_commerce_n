@@ -63,7 +63,7 @@ class App extends StatelessWidget {
               data: MediaQuery.of(context)
                   .copyWith(textScaler: const TextScaler.linear(1.0)),
               child: MaterialApp(
-                // builder: DevicePreview.appBuilder,
+                builder: DevicePreview.appBuilder,
                 title: 'e_commerce_n_flutter',
                 themeMode: themeModeState.themeMode,
                 theme: NAppTheme.lightTheme,

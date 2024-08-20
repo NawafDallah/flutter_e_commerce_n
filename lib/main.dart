@@ -9,9 +9,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  // Bloc.observer = MyBlocObserver();
+  Bloc.observer = MyBlocObserver();
   runApp(
-    const App(),
+    DevicePreview(builder: (context) => const App()),
   );
 }
 

@@ -35,6 +35,9 @@ class SliderBanner extends StatelessWidget {
           height: NFunctions.screenHeight(context) * 0.25,
           child: AnimationLimiter(
             child: PageView.builder(
+              key: const PageStorageKey("Banner"),
+                allowImplicitScrolling: true,
+                pageSnapping: true,
                 physics: const BouncingScrollPhysics(),
                 controller: _pageController,
                 itemCount: banners.length,
@@ -53,10 +56,12 @@ class SliderBanner extends StatelessWidget {
                                     duration: const Duration(milliseconds: 600),
                                     child: Container(
                                       margin: const EdgeInsets.symmetric(
-                                          horizontal: NSizes.md),
+                                        horizontal: NSizes.md,
+                                      ),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
-                                            NSizes.borderRadiusLg),
+                                          NSizes.borderRadiusLg,
+                                        ),
                                       ),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(
@@ -85,10 +90,12 @@ class SliderBanner extends StatelessWidget {
                               )
                             : Container(
                                 margin: const EdgeInsets.symmetric(
-                                    horizontal: NSizes.md),
+                                  horizontal: NSizes.md,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(
-                                      NSizes.borderRadiusLg),
+                                    NSizes.borderRadiusLg,
+                                  ),
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(
@@ -118,6 +125,7 @@ class SliderBanner extends StatelessWidget {
         ),
         const SizedBox(height: NSizes.spaceBtwItems),
         SmoothPageIndicator(
+          key: const PageStorageKey("Banner"),
           controller: _pageController,
           count: 5,
           effect: SwapEffect(

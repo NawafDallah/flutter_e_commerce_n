@@ -40,3 +40,15 @@ class IsHomeFitchedCubit extends Cubit<bool> {
     emit(true);
   }
 }
+
+class IsTimerOnCubit extends Cubit<bool> {
+  IsTimerOnCubit() : super(false);
+
+  void setTimerTrue() {
+    emit(true);
+  }
+
+  void setTimerFalse() {
+    emit(false);
+  }
+}

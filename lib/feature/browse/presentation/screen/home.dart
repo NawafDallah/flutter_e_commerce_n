@@ -1,4 +1,3 @@
-// import 'dart:async';
 
 import 'package:flutter_e_commerce_n_1/common/utils/constants/image_strings.dart';
 import 'package:flutter_e_commerce_n_1/common/utils/extensions/translate_x_extension.dart';
@@ -10,7 +9,6 @@ import '../../../../common/utils/constants/sizes.dart';
 import '../../../../common/utils/functions/functions.dart';
 import '../../../../common/widgets/empty_page.dart';
 import '../../../../common/widgets/responsive.dart';
-// import '../../domain/entity/banners_entity.dart';
 import '../bloc/browse/home_bloc/browse_bloc.dart';
 import '../widget/home/app_bar_capertino.dart';
 import '../widget/home/catigories.dart';
@@ -36,7 +34,7 @@ class _HomeState extends State<Home> {
   final _logoNotifire = ValueNotifier<double>(0.0);
   final _pageNotifire = ValueNotifier<double>(0.0);
   final _homeFetchedNotifier = ValueNotifier<bool>(false);
-  // late final Timer _timer;
+  // late Timer _timer;
 
   @override
   void initState() {
@@ -48,9 +46,10 @@ class _HomeState extends State<Home> {
   }
 
   // check if home page is fetched or not to reduce num of request
-  // on the server, onle fitched once when you open the app
+  // to the server, onle fitched once when you open the app
   // or using the refresh indecator by your self.
   void isHomeFetched() async {
+    context.read<IsTimerOnCubit>().setTimerFalse();
     final isFetched = context.read<IsHomeFitchedCubit>().state;
     if (!isFetched) {
       context.read<HomeBloc>().add(const GetHomeDataEvent());
@@ -128,21 +127,30 @@ class _HomeState extends State<Home> {
               builder: (context, state) {
                 if (state is HomeLoadingStata) {
                   return ShimmerHomePage(scrollController: _scrollController);
-                }
-                if (state is HomeDataSuccessStata) {
-                  // sliderBannerTimer(state.homeData.banners);
+                } else if (state is HomeDataSuccessStata) {
+                  // final timerState = context.read<IsTimerOnCubit>().state;
+                  // if (!timerState) {
+                  //   sliderBannerTimer(state.homeData.banners);
+                  //   context.read<IsTimerOnCubit>().setTimerTrue();
+                  // }
                   return CustomScrollView(
                     physics: const BouncingScrollPhysics(),
                     controller: _scrollController,
+                    key: const PageStorageKey("Home"),
                     slivers: [
                       // Cupertino App Bar IOS style
                       AppBarCupertino(scrollNotifire: _scrollNotifire),
 
                       // THE REFRESH INDICATOR IOS STYLE TO FITCH DATA
-                      CupertinoSliverRefreshControl(onRefresh: () async {
-                        context.read<HomeBloc>().add(const GetHomeDataEvent());
-                        _homeFetchedNotifier.value = true;
-                      }),
+                      CupertinoSliverRefreshControl(
+                        refreshTriggerPullDistance: kTextTabBarHeight * 3,
+                        onRefresh: () async {
+                          context
+                              .read<HomeBloc>()
+                              .add(const GetHomeDataEvent());
+                          _homeFetchedNotifier.value = true;
+                        },
+                      ),
 
                       // THE WELCOME TEXT
                       const SliverToBoxAdapter(child: WelcomeTexts()),

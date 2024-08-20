@@ -106,6 +106,7 @@ class _FavoriteState extends State<Favorite> {
                   final isEditBtnClicked =
                       context.watch<EditBtnClickedCubit>().state;
                   return CustomScrollView(
+                    key: const PageStorageKey<String>('favorite'),
                     controller: _scrollController,
                     physics: const BouncingScrollPhysics(),
                     slivers: [

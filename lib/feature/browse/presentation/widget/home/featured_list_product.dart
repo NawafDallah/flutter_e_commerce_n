@@ -24,6 +24,7 @@ class FeaturedListItems extends StatelessWidget {
           ? NFunctions.screenHeight(context) * 0.25
           : NFunctions.screenHeight(context) * 0.20,
       child: CustomScrollView(
+        
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
         slivers: [

@@ -47,6 +47,9 @@ class CustomNavigationBar extends StatelessWidget {
           BlocProvider(
             create: (context) => IsHomeFitchedCubit(),
           ),
+          BlocProvider(
+            create: (context) => IsTimerOnCubit(),
+          )
         ],
         child: BlocBuilder<NavBarIndexCubit, SelectedIndex>(
           builder: (context, state) {

@@ -50,6 +50,7 @@ class _FormLoginState extends State<FormLogin> {
       "userName": state.user.userName,
     };
     if (state.user.userApproved == 0) {
+      NFunctions.showSnackBar(context, "verificationAccount".tr(context));
       Navigator.of(context).pushNamed(
         Routes.verifyCode,
         arguments: {

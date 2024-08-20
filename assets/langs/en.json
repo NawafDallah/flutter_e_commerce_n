@@ -48,6 +48,7 @@
   "verificationCodeExpired": "Verification code has expired",
   "invalidCode": "Invalid verification code",
   "verificationCodeRequired": "Verification Code is required",
+  "verificationAccount": "You must first verify your account using the verification code sent to you",
   "resendEmail": "Resend Email",
   "don'tReseaveTheVerificationCode": "Don't reseave the verification code?",
   "loginTitle": "Welcome back,",
@@ -96,8 +97,10 @@
   "aboutApp": "About app",
   "aboutUs": "About us",
   "contantUs": "Contant us",
-  "yse": "Yes",
+  "yes": "Yes",
   "areYouSure": "Are you sure",
   "logout": "Logout",
-  "deleteAccount": "Delete account"
+  "deleteAccount": "Delete account",
+  "description": "Description",
+  "addToCart": "addToCart"
 }

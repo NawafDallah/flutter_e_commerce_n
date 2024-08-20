@@ -1,9 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_e_commerce_n_1/common/utils/constants/sizes.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import '../../../../common/utils/constants/sizes.dart';
 import '../../../../common/widgets/responsive.dart';
 
 class OnBordingText extends StatelessWidget {
