@@ -1,4 +1,4 @@
-
+// import 'dart:async';
 import 'package:flutter_e_commerce_n_1/common/utils/constants/image_strings.dart';
 import 'package:flutter_e_commerce_n_1/common/utils/extensions/translate_x_extension.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +9,7 @@ import '../../../../common/utils/constants/sizes.dart';
 import '../../../../common/utils/functions/functions.dart';
 import '../../../../common/widgets/empty_page.dart';
 import '../../../../common/widgets/responsive.dart';
+// import '../../domain/entity/banners_entity.dart';
 import '../bloc/browse/home_bloc/browse_bloc.dart';
 import '../widget/home/app_bar_capertino.dart';
 import '../widget/home/catigories.dart';
@@ -116,174 +117,173 @@ class _HomeState extends State<Home> {
         children: [
           // BOTTOM FADE LOGO
           FadeLogo(logoNotifire: _logoNotifire),
-          CupertinoScrollbar(
-            controller: _scrollController,
-            child: BlocConsumer<HomeBloc, HomeState>(
-              listener: (context, state) {
-                if (state is HomeFailureStata) {
-                  NFunctions.showSnackBar(context, state.error.tr(context));
-                }
-              },
-              builder: (context, state) {
-                if (state is HomeLoadingStata) {
-                  return ShimmerHomePage(scrollController: _scrollController);
-                } else if (state is HomeDataSuccessStata) {
-                  // final timerState = context.read<IsTimerOnCubit>().state;
-                  // if (!timerState) {
-                  //   sliderBannerTimer(state.homeData.banners);
-                  //   context.read<IsTimerOnCubit>().setTimerTrue();
-                  // }
-                  return CustomScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    controller: _scrollController,
-                    key: const PageStorageKey("Home"),
-                    slivers: [
-                      // Cupertino App Bar IOS style
-                      AppBarCupertino(scrollNotifire: _scrollNotifire),
-
-                      // THE REFRESH INDICATOR IOS STYLE TO FITCH DATA
-                      CupertinoSliverRefreshControl(
-                        refreshTriggerPullDistance: kTextTabBarHeight * 3,
-                        onRefresh: () async {
-                          context
-                              .read<HomeBloc>()
-                              .add(const GetHomeDataEvent());
-                          _homeFetchedNotifier.value = true;
-                        },
-                      ),
-
-                      // THE WELCOME TEXT
-                      const SliverToBoxAdapter(child: WelcomeTexts()),
-
-                      // SPACE
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: isTablet
-                              ? NSizes.spaceBtwSections
-                              : isSmallMobile
-                                  ? null
-                                  : NSizes.spaceBtwItems,
-                        ),
-                      ),
-
-                      // CATIGORIES GRID VIEW
-                      ValueListenableBuilder<bool>(
-                        valueListenable: _homeFetchedNotifier,
-                        builder: (context, homeFetchedNotifier, child) {
-                          return Catigories(
-                            homeFetchedNotifier: homeFetchedNotifier,
-                            catigories: state.homeData.catigories,
-                          );
-                        },
-                      ),
-
-                      // DIVIDER
-                      const SliverToBoxAdapter(child: Divider(thickness: 3.0)),
-
-                      // SPACE
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: isTablet
-                              ? NSizes.spaceBtwSections
-                              : isSmallMobile
-                                  ? null
-                                  : NSizes.spaceBtwItems,
-                        ),
-                      ),
-
-                      // HORIZONTAL BANNER
-                      ValueListenableBuilder<bool>(
-                        valueListenable: _homeFetchedNotifier,
-                        builder: (context, homeFetchedNotifier, child) {
-                          return SliverToBoxAdapter(
-                            child: SliderBanner(
-                              pageController: _pageController,
-                              pageNotifire: _pageNotifire,
-                              banners: state.homeData.banners,
-                              homeFetchedNotifier: homeFetchedNotifier,
-                            ),
-                          );
-                        },
-                      ),
-
-                      // DIVIDER
-                      const SliverToBoxAdapter(child: Divider(thickness: 3.0)),
-
-                      // TITLE OF THE SECTION
-                      SliverToBoxAdapter(
-                        child: SectionTitle(
-                          title: "featured".tr(context),
-                          padding: 16.0,
-                        ),
-                      ),
-
-                      // FEATURED PRODUCT LIST VIEW
-                      ValueListenableBuilder(
-                        valueListenable: _homeFetchedNotifier,
-                        builder: (_, homeFetchedNotifier, __) {
-                          return SliverToBoxAdapter(
-                              child: FeaturedListItems(
-                            featureds: state.homeData.featured,
-                            homeFetchedNotifier: homeFetchedNotifier,
-                          ));
-                        },
-                      ),
-
-                      // SPACE
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: isTablet
-                              ? NSizes.spaceBtwSections
-                              : isSmallMobile
-                                  ? null
-                                  : NSizes.spaceBtwItems,
-                        ),
-                      ),
-
-                      // DIVIDER
-                      const SliverToBoxAdapter(child: Divider(thickness: 3.0)),
-
-                      // TITLE OF THE SECTION
-                      SliverToBoxAdapter(
-                        child: SectionTitle(
-                          title: "populerProduct".tr(context),
-                          padding: 16.0,
-                        ),
-                      ),
-
-                      // SPACE
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: isTablet
-                              ? NSizes.spaceBtwSections
-                              : NSizes.spaceBtwItems,
-                        ),
-                      ),
-
-                      // POPULER PRODUCT GRID VIEW
-                      ValueListenableBuilder(
-                        valueListenable: _homeFetchedNotifier,
-                        builder: (_, homeFetchedNotifier, __) {
-                          return PopulerGridItems(
-                            populars: state.homeData.popular,
-                          );
-                        },
-                      ),
-
-                      // SPACE
-                      const SliverToBoxAdapter(
-                        child:
-                            SizedBox(height: kBottomNavigationBarHeight * 1.5),
-                      ),
-                    ],
-                  );
-                }
+          BlocConsumer<HomeBloc, HomeState>(
+            listener: (context, state) {
+              if (state is HomeFailureStata) {
+                NFunctions.showSnackBar(context, state.error.tr(context));
+              }
+            },
+            builder: (context, state) {
+              if (state is HomeLoadingStata) {
+                return ShimmerHomePage(scrollController: _scrollController);
+              } else if (state is HomeFailureStata) {
                 return const EmptyPage(
                   image: NImages.noConnection,
                   text: "somethingWrong",
                 );
-              },
-            ),
+              } else if (state is HomeDataSuccessStata) {
+                // final timerState = context.read<IsTimerOnCubit>().state;
+                // if (!timerState) {
+                //   sliderBannerTimer(state.homeData.banners);
+                //   context.read<IsTimerOnCubit>().setTimerTrue();
+                // }
+                return CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  controller: _scrollController,
+                  key: const PageStorageKey("Home"),
+                  slivers: [
+                    // Cupertino App Bar IOS style
+                    AppBarCupertino(
+                      scrollNotifire: _scrollNotifire,
+                      catigories: state.homeData.catigories,
+                    ),
+
+                    // THE REFRESH INDICATOR IOS STYLE TO FITCH DATA
+                    CupertinoSliverRefreshControl(
+                      refreshTriggerPullDistance: kTextTabBarHeight * 3,
+                      onRefresh: () async {
+                        context.read<HomeBloc>().add(const GetHomeDataEvent());
+                        _homeFetchedNotifier.value = true;
+                      },
+                    ),
+
+                    // THE WELCOME TEXT
+                    const SliverToBoxAdapter(child: WelcomeTexts()),
+
+                    // SPACE
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: isTablet
+                            ? NSizes.spaceBtwSections
+                            : isSmallMobile
+                                ? null
+                                : NSizes.spaceBtwItems,
+                      ),
+                    ),
+
+                    // CATIGORIES GRID VIEW
+                    ValueListenableBuilder<bool>(
+                      valueListenable: _homeFetchedNotifier,
+                      builder: (_, homeFetchedNotifier, __) {
+                        return Catigories(
+                          homeFetchedNotifier: homeFetchedNotifier,
+                          catigories: state.homeData.catigories,
+                        );
+                      },
+                    ),
+
+                    // DIVIDER
+                    const SliverToBoxAdapter(child: Divider(thickness: 3.0)),
+
+                    // SPACE
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: isTablet
+                            ? NSizes.spaceBtwSections
+                            : isSmallMobile
+                                ? null
+                                : NSizes.spaceBtwItems,
+                      ),
+                    ),
+
+                    // HORIZONTAL BANNER
+                    ValueListenableBuilder<bool>(
+                      valueListenable: _homeFetchedNotifier,
+                      builder: (context, homeFetchedNotifier, child) {
+                        return SliverToBoxAdapter(
+                          child: SliderBanner(
+                            pageController: _pageController,
+                            pageNotifire: _pageNotifire,
+                            banners: state.homeData.banners,
+                            homeFetchedNotifier: homeFetchedNotifier,
+                          ),
+                        );
+                      },
+                    ),
+
+                    // DIVIDER
+                    const SliverToBoxAdapter(child: Divider(thickness: 3.0)),
+
+                    // TITLE OF THE SECTION
+                    SliverToBoxAdapter(
+                      child: SectionTitle(
+                        title: "featured".tr(context),
+                        padding: 16.0,
+                      ),
+                    ),
+
+                    // FEATURED PRODUCT LIST VIEW
+                    ValueListenableBuilder(
+                      valueListenable: _homeFetchedNotifier,
+                      builder: (_, homeFetchedNotifier, __) {
+                        return SliverToBoxAdapter(
+                            child: FeaturedListItems(
+                          featureds: state.homeData.featured,
+                          homeFetchedNotifier: homeFetchedNotifier,
+                        ));
+                      },
+                    ),
+
+                    // SPACE
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: isTablet
+                            ? NSizes.spaceBtwSections
+                            : isSmallMobile
+                                ? null
+                                : NSizes.spaceBtwItems,
+                      ),
+                    ),
+
+                    // DIVIDER
+                    const SliverToBoxAdapter(child: Divider(thickness: 3.0)),
+
+                    // TITLE OF THE SECTION
+                    SliverToBoxAdapter(
+                      child: SectionTitle(
+                        title: "populerProduct".tr(context),
+                        padding: 16.0,
+                      ),
+                    ),
+
+                    // SPACE
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: isTablet
+                            ? NSizes.spaceBtwSections
+                            : NSizes.spaceBtwItems,
+                      ),
+                    ),
+
+                    // POPULER PRODUCT GRID VIEW
+                    ValueListenableBuilder(
+                      valueListenable: _homeFetchedNotifier,
+                      builder: (_, homeFetchedNotifier, __) {
+                        return PopulerGridItems(
+                          populars: state.homeData.popular,
+                        );
+                      },
+                    ),
+
+                    // SPACE
+                    const SliverToBoxAdapter(
+                      child: SizedBox(height: kBottomNavigationBarHeight * 1.5),
+                    ),
+                  ],
+                );
+              }
+              return const CupertinoActivityIndicator();
+            },
           ),
         ],
       ),

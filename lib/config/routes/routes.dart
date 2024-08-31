@@ -13,5 +13,6 @@ class Routes {
   static const String navigationBar = '/navigation_bar';
   static const String catigory = '/catigory';
   static const String profile = '/profile';
+  static const String search = '/search';
   
 }

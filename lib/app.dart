@@ -82,7 +82,7 @@ class App extends StatelessWidget {
                   GlobalMaterialLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                   // Built-in localization for text direction LTR/RTL
-                  GlobalWidgetsLocalizations.delegate
+                  GlobalWidgetsLocalizations.delegate,
                 ],
                 // Returns a locale which will be used by the app
                 localeResolutionCallback: (locale, supportedLocales) {

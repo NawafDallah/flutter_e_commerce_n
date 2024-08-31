@@ -54,10 +54,6 @@ class DetailsPage extends StatelessWidget {
                   pinned: true,
                   automaticallyImplyLeading: false,
                   flexibleSpace: FlexibleSpaceBar(
-                    stretchModes: const [
-                      StretchMode.blurBackground,
-                      StretchMode.zoomBackground,
-                    ],
                     background: Stack(
                       children: [
                         // circle container

@@ -7,7 +7,10 @@ import '../../../../../common/utils/functions/functions.dart';
 import '../../../../../core/entities/products_entity.dart';
 
 class DetailsImage extends StatelessWidget {
-  const DetailsImage({super.key, required this.product});
+  const DetailsImage({
+    super.key,
+    required this.product
+  });
 
   final ProductEntity product;
 
@@ -20,7 +23,7 @@ class DetailsImage extends StatelessWidget {
       left: screenHight * 0.05,
       height: screenHight * 0.35,
       child: Hero(
-        tag: "${product.itemImage} vertical",
+        tag: product.itemImage,
         child: CachedNetworkImage(
           fit: BoxFit.contain,
           errorWidget: (_, url, error) => const Center(

@@ -9,6 +9,7 @@ import '../model/product_model.dart';
 abstract interface class BrowseService {
   Future<HomeModel> getHomeData();
   Future<void> deleteUser({required int userId});
+  Future<List<ProductModel>> searchProduct({required String productName});
   Future<void> updateUser({
     required int userId,
     required int userPhone,
@@ -80,8 +81,9 @@ class BrowseServiceImp implements BrowseService {
   }) async {
     try {
       await dio.post(
-        "${AppApi.updateUser}userId=$userId",
+        AppApi.updateUser,
         options: Options(headers: myheaders),
+        queryParameters: {"userId": userId},
         data: FormData.fromMap({
           "userName": userName,
           "userPhone": userPhone,
@@ -89,6 +91,25 @@ class BrowseServiceImp implements BrowseService {
       );
     } on DioException catch (e) {
       throw BrowseException.updateUser(e);
+    }
+  }
+
+  @override
+  Future<List<ProductModel>> searchProduct(
+      {required String productName}) async {
+    try {
+      final response = await dio.get(
+        AppApi.searchProduct,
+        options: Options(headers: myheaders),
+        queryParameters: {"productName": productName},
+      );
+      List<ProductModel> products = response.data["response"]
+          .map<ProductModel>(
+              (e) => ProductModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+      return products;
+    } on DioException catch (e) {
+      throw BrowseException.searchProduct(e);
     }
   }
 }

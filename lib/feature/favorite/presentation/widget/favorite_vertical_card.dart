@@ -51,15 +51,18 @@ class FavoriteVerticalCard extends StatelessWidget {
         children: [
           Column(
             children: [
-              CachedNetworkImage(
-                height: 160,
-                fit: BoxFit.contain,
-                imageUrl: "${AppApi.productsImage}/${product.itemImage}",
-                errorWidget: (_, url, error) => const Center(
-                  child: Icon(Icons.error_outline),
+              Hero(
+                tag: product.itemImage,
+                child: CachedNetworkImage(
+                  height: 160,
+                  fit: BoxFit.contain,
+                  imageUrl: "${AppApi.productsImage}/${product.itemImage}",
+                  errorWidget: (_, url, error) => const Center(
+                    child: Icon(Icons.error_outline),
+                  ),
+                  progressIndicatorBuilder: (_, url, progress) =>
+                      const CupertinoActivityIndicator(),
                 ),
-                progressIndicatorBuilder: (_, url, progress) =>
-                    const CupertinoActivityIndicator(),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6.0),

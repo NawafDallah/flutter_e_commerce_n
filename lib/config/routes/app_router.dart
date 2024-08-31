@@ -1,13 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_e_commerce_n_1/feature/browse/presentation/screen/search.dart';
 
 import '../../feature/auth/presentation/screen/forget_password.dart';
 import '../../feature/auth/presentation/screen/login.dart';
 import '../../feature/auth/presentation/screen/reset_password.dart';
 import '../../feature/auth/presentation/screen/signup.dart';
 import '../../feature/auth/presentation/screen/verifacation_code.dart';
+import '../../feature/browse/domain/entity/catigory_entity.dart';
+import '../../feature/browse/presentation/bloc/browse/search_product/search_product_bloc.dart';
 import '../../feature/browse/presentation/screen/catigories_page.dart';
 import '../../feature/browse/presentation/screen/profile.dart';
+import '../../init_dependencies.dart';
 import '../../navigation_bar.dart';
 import '../../feature/on_boarding/presentation/bloc/on_boarding_providers.dart';
 import 'routes.dart';
@@ -68,6 +73,15 @@ class AppRouter {
       case Routes.profile:
         return CupertinoPageRoute(
           builder: (_) => const Profile(),
+        );
+      case Routes.search:
+        return CupertinoPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => sl<SearchProductBloc>(),
+            child: SearchPage(
+              catigories: routeSettings.arguments as List<CatigoryEntity>,
+            ),
+          ),
         );
       default:
         return null;

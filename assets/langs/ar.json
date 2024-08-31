@@ -102,5 +102,8 @@
   "logout": "تسجيل الخروج",
   "deleteAccount": "حذف الحساب",
   "description": "الوصف",
-  "addToCart": "أضف الى السلة"
+  "addToCart": "أضف الى السلة",
+  "searchByProductName": "ابحث بإسم المنتج",
+  "search": "البحث",
+  "brand": "البراند"
 }

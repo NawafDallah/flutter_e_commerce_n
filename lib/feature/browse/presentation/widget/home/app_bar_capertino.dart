@@ -1,21 +1,30 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_e_commerce_n_1/common/utils/extensions/translate_x_extension.dart';
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_e_commerce_n_1/common/utils/extensions/translate_x_extension.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../../common/utils/constants/colors.dart';
 import '../../../../../common/utils/constants/sizes.dart';
 import '../../../../../common/utils/functions/functions.dart';
 import '../../../../../common/widgets/responsive.dart';
+import '../../../../../config/routes/routes.dart';
+import '../../../../../init_dependencies.dart';
+import '../../../domain/entity/catigory_entity.dart';
+import '../../bloc/browse/search_product/search_product_bloc.dart';
+import '../../screen/search.dart';
 import 'search_capertino.dart';
 
 class AppBarCupertino extends StatelessWidget {
   const AppBarCupertino({
     super.key,
     required this.scrollNotifire,
+    required this.catigories,
   });
 
   final ValueNotifier<double> scrollNotifire;
+  final List<CatigoryEntity> catigories;
 
   @override
   Widget build(BuildContext context) {
@@ -25,36 +34,43 @@ class AppBarCupertino extends StatelessWidget {
       automaticallyImplyLeading: false,
       automaticallyImplyTitle: false,
       backgroundColor: isDark ? NColors.black : NColors.white,
-      leading: const LeadingAppBar(),
-      middle: const SizedBox(),
-      transitionBetweenRoutes: true,
+      leading: const _LeadingAppBar(),
       trailing: ValueListenableBuilder(
           valueListenable: scrollNotifire,
           builder: (_, value, __) {
-            return FadeIcon(
+            return _FadeIcon(
               value: value,
+              catigories: catigories,
               icon: const Icon(
                 Iconsax.search_normal,
-                size: 28,
+                size: NSizes.iconSm * 1.8,
                 color: NColors.primary,
               ),
             );
           }),
       largeTitle: Padding(
         padding: EdgeInsets.only(
-          left: isArabic ? 16.0 : 0.0,
-          right: isArabic ? 0.0 : 16.0,
+          top: NSizes.sm,
+          left: isArabic ? NSizes.md : 0.0,
+          right: isArabic ? 0.0 : NSizes.md,
         ),
-        child: const SearchBarCupertino(),
+        child: OpenContainer(
+          transitionDuration: const Duration(milliseconds: 500),
+          transitionType: ContainerTransitionType.fade,
+          openColor: isDark ? NColors.black : NColors.white,
+          closedColor: CupertinoColors.tertiarySystemFill,
+          closedBuilder: (context, action) => const SearchBarCupertino(),
+          openBuilder: (context, action) => BlocProvider(
+              create: (context) => sl<SearchProductBloc>(),
+              child: SearchPage(catigories: catigories)),
+        ),
       ),
     );
   }
 }
 
-class LeadingAppBar extends StatelessWidget {
-  const LeadingAppBar({
-    super.key,
-  });
+class _LeadingAppBar extends StatelessWidget {
+  const _LeadingAppBar();
 
   @override
   Widget build(BuildContext context) {
@@ -100,14 +116,15 @@ class LeadingAppBar extends StatelessWidget {
   }
 }
 
-class FadeIcon extends StatelessWidget {
-  const FadeIcon({
-    super.key,
+class _FadeIcon extends StatelessWidget {
+  const _FadeIcon({
     required this.value,
     required this.icon,
+    required this.catigories,
   });
   final double value;
   final Widget icon;
+  final List<CatigoryEntity> catigories;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +133,9 @@ class FadeIcon extends StatelessWidget {
       duration: const Duration(milliseconds: 200),
       child: IconButton(
         padding: EdgeInsets.zero,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, Routes.search, arguments: catigories);
+        },
         icon: icon,
       ),
     );

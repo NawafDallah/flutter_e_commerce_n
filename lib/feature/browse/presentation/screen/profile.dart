@@ -125,7 +125,7 @@ class _ProfileState extends State<Profile> {
                       // phone numer
                       TextFormField(
                         cursorColor: NColors.primary,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.number,
                         controller: _phoneController,
                         onChanged: (value) {
                           if ("0$value" != user['userPhone'] &&

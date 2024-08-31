@@ -23,6 +23,8 @@ abstract interface class BrowseRepository {
     required int userPhone,
     required String userName,
   });
+  // SERACH FOR PRODUCTS BY PRODUCTS NAME
+  Future<Either<Failure, List<ProductEntity>>> searchProduct({
+    required String productName,
+  });
 }
-
-

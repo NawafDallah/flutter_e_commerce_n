@@ -102,5 +102,8 @@
   "logout": "Logout",
   "deleteAccount": "Delete account",
   "description": "Description",
-  "addToCart": "addToCart"
+  "addToCart": "addToCart",
+  "searchByProductName": "Search by product name",
+  "search": "Search",
+  "brand": "Brand"
 }

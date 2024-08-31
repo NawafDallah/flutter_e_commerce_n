@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_e_commerce_n_1/common/utils/extensions/translate_x_extension.dart';
 
 import '../../../../../common/utils/constants/sizes.dart';
 import '../home/search_capertino.dart';
@@ -30,9 +31,9 @@ class SpaceAppBarBackground extends StatelessWidget {
           ),
 
           // THE TITLE OF THE GRID SECTION
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: SectionTitle(
-              title: "Brands",
+              title: "brand".tr(context),
               padding: 0.0,
             ),
           ),

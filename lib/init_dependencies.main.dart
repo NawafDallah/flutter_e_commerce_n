@@ -105,7 +105,7 @@ _initAuth() {
     ..registerFactory(() => UserLogInCase(authRepository: sl()))
 
     /// bloc
-    ..registerLazySingleton<AuthBloc>(
+    ..registerFactory<AuthBloc>(
       () => AuthBloc(
         userSignUpCase: sl(),
         userVerifyCodeCase: sl(),
@@ -134,22 +134,28 @@ _initBrowse() {
     ..registerFactory(() => GetProductsCase(browseRepository: sl()))
     ..registerFactory(() => DeleteUserCase(browseRepository: sl()))
     ..registerFactory(() => UpdateUserCase(browseRepository: sl()))
+    ..registerFactory(() => SearchProductCase(browseRepository: sl()))
 
     /// bloc
-    ..registerLazySingleton<HomeBloc>(
+    ..registerFactory<HomeBloc>(
       () => HomeBloc(
         getHomeDataCase: sl(),
       ),
     )
-    ..registerLazySingleton<ProductCategoryBloc>(
+    ..registerFactory<ProductCategoryBloc>(
       () => ProductCategoryBloc(
         getProductsCase: sl(),
       ),
     )
-    ..registerLazySingleton<SettingsBloc>(
+    ..registerFactory<SettingsBloc>(
       () => SettingsBloc(
         deleteUserCase: sl(),
         updateUserCase: sl(),
+      ),
+    )
+    ..registerFactory<SearchProductBloc>(
+      () => SearchProductBloc(
+        searchProductCase: sl(),
       ),
     );
 }
@@ -171,7 +177,7 @@ _initFavorite() {
         () => DeleteFavoriteProductUseCase(favoriteProductRepo: sl()))
 
     /// bloc
-    ..registerLazySingleton<FavoriteProductBloc>(
+    ..registerFactory<FavoriteProductBloc>(
       () => FavoriteProductBloc(
         addProductToFavoriteUseCase: sl(),
         deleteFavoriteProductsUseCase: sl(),

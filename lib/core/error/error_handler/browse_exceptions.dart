@@ -80,4 +80,28 @@ class BrowseException {
       throw InternetException.internetException(e);
     }
   }
+
+  static DioException searchProduct(DioException e) {
+    if (e.response != null) {
+      switch (e.response!.statusCode) {
+        case 400:
+          throw DioException(
+            requestOptions: e.requestOptions,
+            message: "thisfieldisrequired",
+          );
+          case 404:
+          throw DioException(
+            requestOptions: e.requestOptions,
+            message: "noProductsFound",
+          );
+        default:
+          throw DioException(
+            requestOptions: e.requestOptions,
+            message: "somethingWrong",
+          );
+      }
+    } else {
+      throw InternetException.internetException(e);
+    }
+  }
 }

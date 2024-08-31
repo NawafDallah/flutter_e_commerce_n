@@ -22,7 +22,9 @@ class AppApi {
   // needs categoryId=?&page=?&itemsPerPage=? ->
   static const String products = "$secretAPIKey/browse/item.php?";
   // needs userId=? ->
-  static const String updateUser = "$secretAPIKey/browse/update_user.php?";
+  static const String updateUser = "$secretAPIKey/browse/update_user.php";
   // needs userId=? ->
   static const String deleteUser = "$secretAPIKey/browse/delete_user.php?";
+  // needs productName=? ->
+  static const String searchProduct = "$secretAPIKey/search/search_products.php";
 }

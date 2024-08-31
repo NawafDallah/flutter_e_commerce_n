@@ -55,15 +55,18 @@ class ProductHorizontalCard extends StatelessWidget {
                 child: Stack(
                   children: [
                     Positioned.fill(
-                      child: CachedNetworkImage(
-                        fit: BoxFit.contain,
-                        imageUrl:
-                            "${AppApi.productsImage}/${featuredProduct.itemImage}",
-                        errorWidget: (_, url, error) => const Center(
-                          child: Icon(Icons.error_outline),
+                      child: Hero(
+                        tag: featuredProduct.itemImage,
+                        child: CachedNetworkImage(
+                          fit: BoxFit.contain,
+                          imageUrl:
+                              "${AppApi.productsImage}/${featuredProduct.itemImage}",
+                          errorWidget: (_, url, error) => const Center(
+                            child: Icon(Icons.error_outline),
+                          ),
+                          progressIndicatorBuilder: (_, url, progress) =>
+                              const CupertinoActivityIndicator(),
                         ),
-                        progressIndicatorBuilder: (_, url, progress) =>
-                            const CupertinoActivityIndicator(),
                       ),
                     ),
                     Positioned(

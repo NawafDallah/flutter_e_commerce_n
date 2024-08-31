@@ -68,4 +68,17 @@ class BrowseRepositoryImp implements BrowseRepository {
       return Left(Failure(message: e.message!));
     }
   }
+
+  @override
+  Future<Either<Failure, List<ProductModel>>> searchProduct(
+      {required String productName}) async {
+    try {
+      final response = await _browseService.searchProduct(
+        productName: productName,
+      );
+      return Right(response);
+    } on DioException catch (e) {
+      return Left(Failure(message: e.message!));
+    }
+  }
 }

@@ -7,6 +7,7 @@ import '../../../../common/utils/constants/sizes.dart';
 import '../../../../common/widgets/empty_page.dart';
 import '../../../../common/widgets/responsive.dart';
 import '../../../../core/entities/products_entity.dart';
+import '../../../browse/presentation/screen/details_page.dart';
 import '../bloc/edit_btn_cubit/edit_btn_clicked_cubit.dart';
 import '../../../browse/presentation/widget/home/fade_logo.dart';
 import '../bloc/local_product_bloc/favorite_product_bloc.dart';
@@ -92,7 +93,8 @@ class _FavoriteState extends State<Favorite> {
         ),
       ],
       child: Scaffold(
-        body: CupertinoScrollbar(
+        body: Scrollbar(
+          thickness: 4,
           controller: _scrollController,
           child: Stack(
             children: [
@@ -169,6 +171,26 @@ class _FavoriteState extends State<Favorite> {
                                                 SelectedFavoriteProductsCubit>()
                                             .toggleSelection(
                                                 state.products[index]);
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          PageRouteBuilder(
+                                            transitionsBuilder:
+                                                (_, animation, __, child) =>
+                                                    FadeTransition(
+                                              opacity: CurvedAnimation(
+                                                parent: animation,
+                                                curve: const Interval(0.0, 0.5),
+                                              ),
+                                              child: child,
+                                            ),
+                                            pageBuilder: (_, animation, __) =>
+                                                DetailsPage(
+                                              product: state.products[index],
+                                              animation: animation,
+                                            ),
+                                          ),
+                                        );
                                       }
                                     },
                                     child: ScaleTransition(

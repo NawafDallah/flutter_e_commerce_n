@@ -13,6 +13,7 @@ import '../widget/catigory/background_space_bar.dart';
 import '../widget/catigory/catigories_tab_bar.dart';
 import '../widget/my_sliver_appbar.dart';
 import '../widget/product_card/product_vertical_card.dart';
+import 'details_page.dart';
 
 class CatigoriesPage extends StatelessWidget {
   const CatigoriesPage({
@@ -66,8 +67,6 @@ class _TapPage extends StatefulWidget {
 class _TapPageState extends State<_TapPage> {
   final int _currentpage = 1;
   final int _itemsPerPage = 50;
-
-
 
   /// I will work later on pagination
   ///
@@ -131,8 +130,27 @@ class _TapPageState extends State<_TapPage> {
                     duration: const Duration(milliseconds: 700),
                     child: SlideAnimation(
                       verticalOffset: 150,
-                      child: ProductVerticalCard(
-                        product: state.products[index],
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            transitionsBuilder: (_, animation, __, child) =>
+                                FadeTransition(
+                              opacity: CurvedAnimation(
+                                parent: animation,
+                                curve: const Interval(0.0, 0.5),
+                              ),
+                              child: child,
+                            ),
+                            pageBuilder: (_, animation, __) => DetailsPage(
+                              product: state.products[index],
+                              animation: animation,
+                            ),
+                          ),
+                        ),
+                        child: ProductVerticalCard(
+                          product: state.products[index],
+                        ),
                       ),
                     ),
                   ),
